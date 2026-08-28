@@ -5,8 +5,9 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite" // เปลี่ยนเป็น "postgresql" เมื่อใช้ Supabase / PostgreSQL จริง
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
@@ -103,18 +104,19 @@ model Course {
   chapters         Chapter[]
   enrollments      Enrollment[]
   reviews          Review[]
+  questions        Question[]
 
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt
 }
 
-// บทเรียนหลัก (Module / Chapter)
+// บทเรียนหลัก (Chapter / Section)
 model Chapter {
   id          String    @id @default(cuid())
-  title       String    // e.g. "บทที่ 1: ปูพื้นฐานฟังก์ชันและอนุพันธ์"
+  title       String
   description String?
-  position    Int       @default(0)
-  isPublished Boolean   @default(true)
+  order       Int       @default(0)
+  isPublished Boolean   @default(false)
 
   courseId    String
   course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
@@ -125,152 +127,152 @@ model Chapter {
   updatedAt   DateTime  @updatedAt
 }
 
-// บทเรียนย่อย (Lesson / Video Clip)
+// คลิปบทเรียนย่อย (Lesson)
 model Lesson {
-  id            String          @id @default(cuid())
-  title         String          // e.g. "1.1 สูตรอนุพันธ์ที่พบบ่อย พร้อมตัวอย่างข้อสอบ"
-  description   String?
-  position      Int             @default(0)
+  id              String           @id @default(cuid())
+  title           String
+  description     String?
   
-  videoUrl      String?         // URL หรือ Video ID (Cloudflare Stream, Mux, YouTube, Vimeo)
-  videoProvider String?         // "cloudflare" | "mux" | "youtube" | "vimeo"
-  videoDuration Int             @default(0) // ความยาวคลิปหน่วยเป็นวินาที (seconds)
+  // ข้อมูลวิดีโอ (รองรับ Cloudflare Stream, Mux, YouTube, หรือ S3)
+  videoUrl        String?
+  videoProvider   String?          @default("HTML5") // "CLOUDFLARE" | "MUX" | "YOUTUBE" | "S3" | "HTML5"
+  videoDuration   Int              @default(0) // ความยาวเป็นวินาที (seconds)
   
-  isFreePreview Boolean         @default(false) // ให้ทดลองเรียนฟรีได้หรือไม่
-  isPublished   Boolean         @default(true)
+  order           Int              @default(0)
+  isFreePreview   Boolean          @default(false) // ให้ดูตัวอย่างฟรีหรือไม่
+  isPublished     Boolean          @default(false)
 
-  chapterId     String
-  chapter       Chapter         @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  chapterId       String
+  chapter         Chapter          @relation(fields: [chapterId], references: [id], onDelete: Cascade)
 
-  attachments   Attachment[]
-  progress      LessonProgress[]
-  questions     Question[]
+  attachments     Attachment[]
+  userProgress    LessonProgress[]
+  questions       Question[]
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
-// ไฟล์เอกสารประกอบการเรียน (PDF ชีทสรุป, โจทย์)
+// ไฟล์เอกสารประกอบการเรียน (PDF, ชีทสรุป, โค้ดตัวอย่าง)
 model Attachment {
-  id        String   @id @default(cuid())
-  title     String   // e.g. "เอกสารประกอบการเรียน บทที่ 1 (PDF)"
-  fileUrl   String
-  fileSize  String?  // e.g. "2.4 MB"
-  fileType  String?  // "pdf", "zip", etc.
+  id          String    @id @default(cuid())
+  name        String
+  fileUrl     String
+  fileType    String    // e.g. "application/pdf"
+  fileSize    Int?      // bytes
 
-  lessonId  String
-  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId    String
+  lesson      Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
-// การลงทะเบียน / สั่งซื้อคอร์ส
+// การลงทะเบียนเรียน / การซื้อคอร์ส
 model Enrollment {
-  id            String    @id @default(cuid())
-  studentId     String
-  student       User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  courseId      String
-  course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId       String
+  course         Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
-  pricePaid     Float
-  status        String    @default("COMPLETED") // "PENDING" | "COMPLETED" | "REFUNDED"
-  paymentMethod String?   // "PROMPTPAY" | "CREDIT_CARD" | "SLIP_VERIFICATION"
-  slipImageUrl  String?
+  // ข้อมูลการเงิน
+  amountPaid     Float     @default(0)
+  currency       String    @default("THB")
+  paymentMethod  String    @default("PROMPTPAY") // "PROMPTPAY" | "CREDIT_CARD" | "STRIPE" | "OMISE"
+  paymentStatus  String    @default("COMPLETED") // "PENDING" | "COMPLETED" | "REFUNDED"
+  paymentSlipUrl String?
 
-  completedAt   DateTime? // วันที่เรียนจบครบทุกบทเรียน
+  enrolledAt     DateTime  @default(now())
 
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  @@unique([studentId, courseId])
+  @@unique([userId, courseId])
 }
 
-// ความก้าวหน้าการเรียนแต่ละคลิป
+// บันทึกความก้าวหน้าการเรียนแต่ละคลิป
 model LessonProgress {
-  id                String    @id @default(cuid())
-  studentId         String
-  student           User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  lessonId          String
-  lesson            Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  lessonId       String
+  lesson         Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
 
-  isCompleted       Boolean   @default(false)
-  lastPlayedSeconds Int       @default(0) // วินาทีที่หยุดดูล่าสุด
+  isCompleted    Boolean   @default(false)
+  lastPositionSec Int      @default(0) // วินาทีล่าสุดที่ดูค้างไว้ (Resume video)
 
-  completedAt       DateTime?
-  updatedAt         DateTime  @updatedAt
+  completedAt    DateTime?
+  updatedAt      DateTime  @updatedAt
 
-  @@unique([studentId, lessonId])
+  @@unique([userId, lessonId])
 }
 
 // รีวิวและคะแนนคอร์ส
 model Review {
-  id        String   @id @default(cuid())
-  rating    Int      // 1 to 5
+  id        String    @id @default(cuid())
+  rating    Int       @default(5) // 1 - 5 ดาว
   comment   String?
 
-  studentId String
-  student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   courseId  String
-  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  course    Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
-  @@unique([studentId, courseId])
+  @@unique([userId, courseId])
 }
 
-// กระดานถาม-ตอบในบทเรียน (Q&A)
+// ถาม-ตอบข้อสงสัยใต้คลิป (Q&A)
 model Question {
-  id        String   @id @default(cuid())
-  title     String?
+  id        String    @id @default(cuid())
+  title     String
   content   String
 
-  lessonId  String
-  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-
   userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  courseId  String
+  course    Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  lessonId  String?
+  lesson    Lesson?   @relation(fields: [lessonId], references: [id], onDelete: SetNull)
 
   answers   Answer[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 // คำตอบใน Q&A
 model Answer {
-  id           String   @id @default(cuid())
-  content      String
-  isFromTutor  Boolean  @default(false)
+  id          String    @id @default(cuid())
+  content     String
+  isByTutor   Boolean   @default(false) // เป็นคำตอบจากติวเตอร์ผู้สอนหรือไม่
 
-  questionId   String
-  question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  userId       String
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  questionId  String
+  question    Question  @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
-// บันทึกการจ่ายเงิน / เบิกรายได้ของติวเตอร์ (Payout)
+// บันทึกการจ่ายเงินส่วนแบ่งให้ติวเตอร์
 model Payout {
-  id             String    @id @default(cuid())
-  instructorId   String
-  instructor     User      @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+  id            String    @id @default(cuid())
+  instructorId  String
+  instructor    User      @relation(fields: [instructorId], references: [id], onDelete: Cascade)
 
-  totalAmount    Float     // ยอดขายรวม
-  commissionFee  Float     // ค่าธรรมเนียมระบบ (เช่น 20%)
-  netAmount      Float     // ยอดสุทธิที่ติวเตอร์ได้รับ
+  amount        Float
+  status        String    @default("PENDING") // "PENDING" | "PAID" | "REJECTED"
+  paidAt        DateTime?
+  referenceNote String?
 
-  status         String    @default("PENDING") // "PENDING" | "PROCESSING" | "PAID" | "REJECTED"
-  slipUrl        String?   // สลิปโอนเงินให้ติวเตอร์
-  note           String?
-  paidAt         DateTime?
-
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
