@@ -13,8 +13,10 @@ import {
   CheckCircle2, 
   Star, 
   Sparkles,
-  ArrowLeft
+  ArrowLeft,
+  AlertCircle
 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,26 +26,55 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setErrorMessage("");
 
-    // Simulate authentication delay
-    setTimeout(() => {
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: email.trim(),
+        password,
+      });
+
+      if (error) {
+        if (error.message.includes("Invalid login credentials")) {
+          setErrorMessage("อีเมลหรือรหัสผ่านไม่ถูกต้อง กรุณาตรวจสอบอีกครั้ง");
+        } else if (error.message.includes("Email not confirmed")) {
+          setErrorMessage("กรุณายืนยันอีเมลของคุณในกล่องจดหมายก่อนเข้าสู่ระบบ");
+        } else {
+          setErrorMessage(error.message);
+        }
+        setIsLoading(false);
+        return;
+      }
+
+      setSuccessMessage("เข้าสู่ระบบสำเร็จ กำลังพาเข้าสู่ห้องเรียน...");
+      setTimeout(() => {
+        router.push("/courses");
+      }, 500);
+    } catch (err: any) {
+      setErrorMessage(err.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
       setIsLoading(false);
-      // Redirect to courses or classroom
-      router.push("/courses");
-    }, 900);
+    }
   };
 
-  const handleSocialLogin = (provider: "google" | "line") => {
-    setIsLoading(true);
-    setTimeout(() => {
+  const handleGoogleLogin = async () => {
+    try {
+      setIsLoading(true);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: typeof window !== "undefined" ? `${window.location.origin}/courses` : undefined,
+        },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      setErrorMessage(err.message || "เกิดข้อผิดพลาดในการเชื่อมต่อ Google");
       setIsLoading(false);
-      router.push("/courses");
-    }, 800);
+    }
   };
 
   return (
@@ -80,13 +111,13 @@ export default function LoginPage() {
             </p>
           </div>
 
-          {/* Social Logins (Google & LINE) */}
-          <div className="grid grid-cols-2 gap-3 mb-6">
+          {/* Google Login Button */}
+          <div className="mb-6">
             <button
               type="button"
-              onClick={() => handleSocialLogin("google")}
+              onClick={handleGoogleLogin}
               disabled={isLoading}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#D0D5DD] bg-white py-2.5 px-3 text-xs font-semibold text-[#344054] shadow-unt-xs hover:bg-[#F9FAFB] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2.5 rounded-lg border border-[#D0D5DD] bg-white py-2.5 px-4 text-xs font-semibold text-[#344054] shadow-unt-xs hover:bg-[#F9FAFB] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all cursor-pointer"
             >
               <svg className="h-4 w-4" viewBox="0 0 24 24">
                 <path
@@ -106,19 +137,7 @@ export default function LoginPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                 />
               </svg>
-              <span>Google</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleSocialLogin("line")}
-              disabled={isLoading}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#ABEFC6] bg-[#ECFDF3] py-2.5 px-3 text-xs font-semibold text-[#027A48] shadow-unt-xs hover:bg-[#D1FADF] focus:outline-none focus:ring-4 focus:ring-[#D1FADF] transition-all cursor-pointer"
-            >
-              <svg className="h-4 w-4 fill-current text-[#06C755]" viewBox="0 0 24 24">
-                <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.577.39.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.026c-.053.303-.242 1.186 1.039.646 1.281-.54 6.914-4.071 9.434-6.969 1.776-1.921 2.583-3.882 2.583-5.957z" />
-              </svg>
-              <span>LINE Login</span>
+              <span>เข้าสู่ระบบด้วย Google</span>
             </button>
           </div>
 
@@ -133,8 +152,16 @@ export default function LoginPage() {
           {/* Email & Password Form */}
           <form onSubmit={handleLogin} className="space-y-4">
             {errorMessage && (
-              <div className="rounded-lg bg-[#FEF3F2] border border-[#FECDCA] p-3 text-xs text-[#B42318]">
-                {errorMessage}
+              <div className="rounded-lg bg-[#FEF3F2] border border-[#FECDCA] p-3 text-xs text-[#B42318] flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            {successMessage && (
+              <div className="rounded-lg bg-[#ECFDF3] border border-[#ABEFC6] p-3 text-xs text-[#027A48] flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 shrink-0" />
+                <span>{successMessage}</span>
               </div>
             )}
 
@@ -207,7 +234,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-lg bg-[#7F56D9] py-3 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] disabled:opacity-60 transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full rounded-lg bg-[#7F56D9] py-3 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] disabled:opacity-60 transition-all flex items-center justify-center gap-2 mt-2 cursor-pointer"
             >
               {isLoading ? (
                 <span>กำลังเข้าสู่ระบบ...</span>

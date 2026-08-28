@@ -15,9 +15,10 @@ import {
   CheckCircle2, 
   Sparkles,
   ArrowLeft,
-  ShieldCheck,
+  AlertCircle,
   Check
 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function SignupPage() {
   const [acceptTerms, setAcceptTerms] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   // Calculate Password Strength
   const passwordStrength = useMemo(() => {
@@ -37,7 +39,7 @@ export default function SignupPage() {
     if (password.length >= 8) score += 1;
     if (/[A-Z]/.test(password) || /[0-9]/.test(password)) score += 1;
     if (/[^A-Za-z0-9]/.test(password)) score += 1;
-    return score; // 0, 1 (Weak), 2 (Medium), 3 (Strong)
+    return score;
   }, [password]);
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -47,22 +49,60 @@ export default function SignupPage() {
       return;
     }
 
+    if (password.length < 6) {
+      setErrorMessage("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร");
+      return;
+    }
+
     setIsLoading(true);
     setErrorMessage("");
 
-    // Simulate account creation
-    setTimeout(() => {
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(),
+        password,
+        options: {
+          data: {
+            full_name: fullName.trim(),
+            phone: phone.trim(),
+            role: "student",
+          },
+          emailRedirectTo: typeof window !== "undefined" ? `${window.location.origin}/courses` : undefined,
+        },
+      });
+
+      if (error) {
+        setErrorMessage(error.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
+        setIsLoading(false);
+        return;
+      }
+
+      if (data.session) {
+        setSuccessMessage("สมัครสมาชิกสำเร็จ! กำลังเข้าสู่ระบบ...");
+        setTimeout(() => router.push("/courses"), 800);
+      } else {
+        setSuccessMessage("สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมลของคุณเพื่อยืนยันบัญชีเข้าเรียน");
+      }
+    } catch (err: any) {
+      setErrorMessage(err.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
       setIsLoading(false);
-      router.push("/courses");
-    }, 1000);
+    }
   };
 
-  const handleSocialSignup = (provider: "google" | "line") => {
-    setIsLoading(true);
-    setTimeout(() => {
+  const handleGoogleSignup = async () => {
+    try {
+      setIsLoading(true);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: typeof window !== "undefined" ? `${window.location.origin}/courses` : undefined,
+        },
+      });
+      if (error) throw error;
+    } catch (err: any) {
+      setErrorMessage(err.message || "เกิดข้อผิดพลาดในการเชื่อมต่อ Google");
       setIsLoading(false);
-      router.push("/courses");
-    }, 800);
+    }
   };
 
   return (
@@ -103,13 +143,13 @@ export default function SignupPage() {
             </p>
           </div>
 
-          {/* Social Signups (Google & LINE) */}
-          <div className="grid grid-cols-2 gap-3 mb-5">
+          {/* Google Register Button */}
+          <div className="mb-5">
             <button
               type="button"
-              onClick={() => handleSocialSignup("google")}
+              onClick={handleGoogleSignup}
               disabled={isLoading}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#D0D5DD] bg-white py-2.5 px-3 text-xs font-semibold text-[#344054] shadow-unt-xs hover:bg-[#F9FAFB] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all cursor-pointer"
+              className="w-full inline-flex items-center justify-center gap-2.5 rounded-lg border border-[#D0D5DD] bg-white py-2.5 px-4 text-xs font-semibold text-[#344054] shadow-unt-xs hover:bg-[#F9FAFB] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all cursor-pointer"
             >
               <svg className="h-4 w-4" viewBox="0 0 24 24">
                 <path
@@ -129,19 +169,7 @@ export default function SignupPage() {
                   d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"
                 />
               </svg>
-              <span>Google</span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => handleSocialSignup("line")}
-              disabled={isLoading}
-              className="inline-flex items-center justify-center gap-2 rounded-lg border border-[#ABEFC6] bg-[#ECFDF3] py-2.5 px-3 text-xs font-semibold text-[#027A48] shadow-unt-xs hover:bg-[#D1FADF] focus:outline-none focus:ring-4 focus:ring-[#D1FADF] transition-all cursor-pointer"
-            >
-              <svg className="h-4 w-4 fill-current text-[#06C755]" viewBox="0 0 24 24">
-                <path d="M24 10.304c0-5.369-5.383-9.738-12-9.738-6.616 0-12 4.369-12 9.738 0 4.814 4.269 8.846 10.019 9.577.39.084.922.258 1.057.592.121.303.079.778.039 1.085l-.171 1.026c-.053.303-.242 1.186 1.039.646 1.281-.54 6.914-4.071 9.434-6.969 1.776-1.921 2.583-3.882 2.583-5.957z" />
-              </svg>
-              <span>LINE Register</span>
+              <span>สมัครสมาชิกด้วย Google</span>
             </button>
           </div>
 
@@ -156,8 +184,16 @@ export default function SignupPage() {
           {/* Registration Form */}
           <form onSubmit={handleSignup} className="space-y-3.5">
             {errorMessage && (
-              <div className="rounded-lg bg-[#FEF3F2] border border-[#FECDCA] p-3 text-xs text-[#B42318]">
-                {errorMessage}
+              <div className="rounded-lg bg-[#FEF3F2] border border-[#FECDCA] p-3 text-xs text-[#B42318] flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            {successMessage && (
+              <div className="rounded-lg bg-[#ECFDF3] border border-[#ABEFC6] p-3 text-xs text-[#027A48] flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 shrink-0" />
+                <span>{successMessage}</span>
               </div>
             )}
 
@@ -297,7 +333,7 @@ export default function SignupPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-lg bg-[#7F56D9] py-3 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] disabled:opacity-60 transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full rounded-lg bg-[#7F56D9] py-3 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] disabled:opacity-60 transition-all flex items-center justify-center gap-2 mt-2 cursor-pointer"
             >
               {isLoading ? (
                 <span>กำลังสร้างบัญชี...</span>

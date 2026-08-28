@@ -8,23 +8,41 @@ import {
   ArrowLeft, 
   CheckCircle2, 
   Send,
-  KeyRound
+  KeyRound,
+  AlertCircle
 } from "lucide-react";
+import { supabase } from "@/lib/supabase";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) return;
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    setErrorMessage("");
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: typeof window !== "undefined" ? `${window.location.origin}/login?reset=true` : undefined,
+      });
+
+      if (error) {
+        setErrorMessage(error.message || "เกิดข้อผิดพลาดในการส่งลิงก์รีเซ็ตรหัสผ่าน");
+        setIsLoading(false);
+        return;
+      }
+
       setIsSubmitted(true);
-    }, 800);
+    } catch (err: any) {
+      setErrorMessage(err.message || "เกิดข้อผิดพลาดในการส่งลิงก์");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -45,6 +63,13 @@ export default function ForgotPasswordPage() {
           </p>
         </div>
 
+        {errorMessage && (
+          <div className="rounded-lg bg-[#FEF3F2] border border-[#FECDCA] p-3 text-xs text-[#B42318] flex items-center gap-2 text-left">
+            <AlertCircle className="h-4 w-4 shrink-0" />
+            <span>{errorMessage}</span>
+          </div>
+        )}
+
         {isSubmitted ? (
           <div className="rounded-xl bg-[#ECFDF3] border border-[#ABEFC6] p-5 space-y-3 text-xs text-left">
             <div className="flex items-center gap-2 font-bold text-[#027A48]">
@@ -56,7 +81,7 @@ export default function ForgotPasswordPage() {
             </p>
             <button
               onClick={() => setIsSubmitted(false)}
-              className="text-xs font-bold text-[#7F56D9] hover:underline pt-1"
+              className="text-xs font-bold text-[#7F56D9] hover:underline pt-1 cursor-pointer"
             >
               ส่งอีกครั้งหากไม่ได้รับอีเมล
             </button>
@@ -84,7 +109,7 @@ export default function ForgotPasswordPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full rounded-lg bg-[#7F56D9] py-3 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] disabled:opacity-60 transition-all flex items-center justify-center gap-2"
+              className="w-full rounded-lg bg-[#7F56D9] py-3 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] disabled:opacity-60 transition-all flex items-center justify-center gap-2 cursor-pointer"
             >
               {isLoading ? (
                 <span>กำลังส่งลิงก์...</span>
