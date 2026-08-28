@@ -560,94 +560,116 @@ export default function LearnClassroomPage({ params }: PageProps) {
         </div>
 
         {/* ========================================================================= */}
-        {/* RIGHT SIDEBAR: CURRICULUM PLAYLIST (Untitled UI Design)                   */}
+        {/* RIGHT SIDEBAR: CURRICULUM PLAYLIST (Responsive Drawer on Mobile)          */}
         {/* ========================================================================= */}
         {sidebarOpen && (
-          <aside className="w-80 sm:w-96 border-l border-[#EAECF0] bg-white flex flex-col shrink-0 shadow-unt-sm z-10">
-            {/* Sidebar Header */}
-            <div className="p-4 border-b border-[#EAECF0] bg-[#F9FAFB]">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-bold text-[#101828]">สารบัญบทเรียน</h3>
-                <span className="text-xs font-semibold text-[#7F56D9]">
-                  {completedLessonIds.length}/{allLessons.length} เสร็จสิ้น
-                </span>
-              </div>
+          <>
+            {/* Mobile Backdrop Overlay */}
+            <div
+              onClick={() => setSidebarOpen(false)}
+              className="fixed inset-0 z-40 bg-[#101828]/50 backdrop-blur-xs md:hidden"
+            />
 
-              {/* Progress Bar */}
-              <div className="h-1.5 w-full rounded-full bg-[#EAECF0] overflow-hidden mb-3">
-                <div
-                  className="h-full bg-[#7F56D9] rounded-full transition-all duration-500"
-                  style={{ width: `${progressPercentage}%` }}
-                />
-              </div>
-
-              {/* Search Lesson Filter */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#667085]" />
-                <input
-                  type="text"
-                  placeholder="ค้นหาชื่อตอน หรือสูตร..."
-                  value={sidebarSearch}
-                  onChange={(e) => setSidebarSearch(e.target.value)}
-                  className="w-full rounded-lg border border-[#D0D5DD] bg-white py-1.5 pl-8 pr-3 text-xs text-[#101828] placeholder:text-[#667085] shadow-unt-xs focus:border-[#7F56D9] focus:outline-none"
-                />
-              </div>
-            </div>
-
-            {/* Chapters & Lessons Accordion List */}
-            <div className="flex-1 overflow-y-auto divide-y divide-[#EAECF0]">
-              {filteredChapters.map((chapter) => (
-                <div key={chapter.id} className="py-2">
-                  <div className="px-4 py-2 text-[11px] font-bold text-[#667085] uppercase tracking-wider bg-[#F9FAFB]/60">
-                    {chapter.title}
-                  </div>
-
-                  <div className="space-y-0.5 mt-1">
-                    {chapter.lessons.map((lesson) => {
-                      const isActive = activeLesson.id === lesson.id;
-                      const isCompleted = completedLessonIds.includes(lesson.id);
-
-                      return (
-                        <button
-                          key={lesson.id}
-                          onClick={() => setActiveLesson(lesson)}
-                          className={`w-full text-left flex items-start gap-3 px-4 py-3 text-xs transition-colors ${
-                            isActive
-                              ? "bg-[#F9F5FF] text-[#7F56D9] font-bold border-l-4 border-[#7F56D9]"
-                              : "text-[#344054] hover:bg-[#F9FAFB]"
-                          }`}
-                        >
-                          <div className="mt-0.5 shrink-0">
-                            {isCompleted ? (
-                              <CheckCircle className="h-4 w-4 text-[#12B76A] fill-[#12B76A]/20" />
-                            ) : isActive ? (
-                              <Play className="h-4 w-4 text-[#7F56D9] fill-[#7F56D9]" />
-                            ) : (
-                              <Circle className="h-4 w-4 text-[#D0D5DD]" />
-                            )}
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <p className={`truncate text-xs ${isActive ? "font-bold text-[#7F56D9]" : "font-medium"}`}>
-                              {lesson.title}
-                            </p>
-                            <div className="flex items-center gap-2 mt-0.5 text-[10px] text-[#667085]">
-                              <span>{Math.floor(lesson.durationSeconds / 60)} นาที</span>
-                              {lesson.isFreePreview && (
-                                <span className="rounded bg-[#ECFDF3] px-1.5 text-[#027A48] font-semibold border border-[#ABEFC6]">
-                                  ดูฟรี
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        </button>
-                      );
-                    })}
+            <aside className="fixed inset-y-0 right-0 z-50 md:static md:z-0 w-80 sm:w-96 border-l border-[#EAECF0] bg-white flex flex-col shrink-0 shadow-unt-2xl md:shadow-none animate-in slide-in-from-right duration-200">
+              {/* Sidebar Header */}
+              <div className="p-4 border-b border-[#EAECF0] bg-[#F9FAFB]">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-sm font-bold text-[#101828]">สารบัญบทเรียน</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-[#7F56D9]">
+                      {completedLessonIds.length}/{allLessons.length} เสร็จสิ้น
+                    </span>
+                    <button
+                      onClick={() => setSidebarOpen(false)}
+                      className="md:hidden rounded p-1 text-[#667085] hover:bg-[#EAECF0]"
+                      title="ปิดสารบัญ"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-          </aside>
+
+                {/* Progress Bar */}
+                <div className="h-1.5 w-full rounded-full bg-[#EAECF0] overflow-hidden mb-3">
+                  <div
+                    className="h-full bg-[#7F56D9] rounded-full transition-all duration-500"
+                    style={{ width: `${progressPercentage}%` }}
+                  />
+                </div>
+
+                {/* Search Lesson Filter */}
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-[#667085]" />
+                  <input
+                    type="text"
+                    placeholder="ค้นหาชื่อตอน หรือสูตร..."
+                    value={sidebarSearch}
+                    onChange={(e) => setSidebarSearch(e.target.value)}
+                    className="w-full rounded-lg border border-[#D0D5DD] bg-white py-1.5 pl-8 pr-3 text-xs text-[#101828] placeholder:text-[#667085] shadow-unt-xs focus:border-[#7F56D9] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Chapters & Lessons Accordion List */}
+              <div className="flex-1 overflow-y-auto divide-y divide-[#EAECF0]">
+                {filteredChapters.map((chapter) => (
+                  <div key={chapter.id} className="py-2">
+                    <div className="px-4 py-2 text-[11px] font-bold text-[#667085] uppercase tracking-wider bg-[#F9FAFB]/60">
+                      {chapter.title}
+                    </div>
+
+                    <div className="space-y-0.5 mt-1">
+                      {chapter.lessons.map((lesson) => {
+                        const isActive = activeLesson.id === lesson.id;
+                        const isCompleted = completedLessonIds.includes(lesson.id);
+
+                        return (
+                          <button
+                            key={lesson.id}
+                            onClick={() => {
+                              setActiveLesson(lesson);
+                              if (window.innerWidth < 768) {
+                                setSidebarOpen(false);
+                              }
+                            }}
+                            className={`w-full text-left flex items-start gap-3 px-4 py-3 text-xs transition-colors ${
+                              isActive
+                                ? "bg-[#F9F5FF] text-[#7F56D9] font-bold border-l-4 border-[#7F56D9]"
+                                : "text-[#344054] hover:bg-[#F9FAFB]"
+                            }`}
+                          >
+                            <div className="mt-0.5 shrink-0">
+                              {isCompleted ? (
+                                <CheckCircle className="h-4 w-4 text-[#12B76A] fill-[#12B76A]/20" />
+                              ) : isActive ? (
+                                <Play className="h-4 w-4 text-[#7F56D9] fill-[#7F56D9]" />
+                              ) : (
+                                <Circle className="h-4 w-4 text-[#D0D5DD]" />
+                              )}
+                            </div>
+
+                            <div className="flex-1 min-w-0">
+                              <p className={`truncate text-xs ${isActive ? "font-bold text-[#7F56D9]" : "font-medium"}`}>
+                                {lesson.title}
+                              </p>
+                              <div className="flex items-center gap-2 mt-0.5 text-[10px] text-[#667085]">
+                                <span>{Math.floor(lesson.durationSeconds / 60)} นาที</span>
+                                {lesson.isFreePreview && (
+                                  <span className="rounded bg-[#ECFDF3] px-1.5 text-[#027A48] font-semibold border border-[#ABEFC6]">
+                                    ดูฟรี
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </aside>
+          </>
         )}
       </div>
     </div>

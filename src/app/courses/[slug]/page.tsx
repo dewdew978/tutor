@@ -482,6 +482,37 @@ export default function CourseDetailPage({ params }: PageProps) {
             </div>
           </div>
         )}
+        {/* Sticky Mobile Enrollment Bar (Shown only on small screens < lg) */}
+        <div className="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-[#EAECF0] p-3 sm:p-4 flex items-center justify-between shadow-unt-xl lg:hidden">
+          <div>
+            <span className="text-[10px] text-[#667085]">ราคาคอร์สเรียน</span>
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-base sm:text-lg font-extrabold text-[#7F56D9]">
+                {course.salePrice ? formatPrice(course.salePrice) : formatPrice(course.price)}
+              </span>
+              {course.salePrice && (
+                <span className="text-[11px] text-[#98A2B3] line-through">
+                  {formatPrice(course.price)}
+                </span>
+              )}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Link
+              href={`/learn/${course.slug}`}
+              className="rounded-lg border border-[#D0D5DD] bg-white px-3 py-2 text-xs font-bold text-[#344054] shadow-unt-xs"
+            >
+              ทดลองเรียน
+            </Link>
+            <button
+              onClick={() => setEnrollModalOpen(true)}
+              className="rounded-lg bg-[#7F56D9] px-4 py-2 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6]"
+            >
+              สมัครเรียนทันที
+            </button>
+          </div>
+        </div>
       </main>
 
       <Footer />
