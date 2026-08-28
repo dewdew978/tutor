@@ -57,33 +57,33 @@ export default function HomePage() {
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3.5">
                   <Link
                     href="/courses"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[#7F56D9] px-6 py-3 text-sm font-semibold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#7F56D9] px-7 py-3.5 text-base font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all"
                   >
                     ดูคอร์สเรียนทั้งหมด ({MOCK_COURSES.length} คอร์ส)
-                    <ArrowRight className="h-4 w-4" />
+                    <ArrowRight className="h-4.5 w-4.5" />
                   </Link>
 
                   <Link
                     href="/learn/math-calculus-mastery"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg border border-[#D0D5DD] bg-white px-5 py-3 text-sm font-semibold text-[#344054] shadow-unt-xs hover:bg-[#F9FAFB] focus:outline-none focus:ring-4 focus:ring-[#F2F4F7] transition-all"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-[#D0D5DD] bg-white px-6 py-3.5 text-base font-bold text-[#344054] shadow-unt-xs hover:bg-[#F9FAFB] focus:outline-none focus:ring-4 focus:ring-[#F2F4F7] transition-all"
                   >
-                    <PlayCircle className="h-4 w-4 text-[#7F56D9]" />
+                    <PlayCircle className="h-5 w-5 text-[#7F56D9]" />
                     ทดลองเข้าห้องเรียนฟรี
                   </Link>
                 </div>
 
                 {/* Trust Points */}
-                <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-[#475467]">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
+                <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-[#475467]">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4.5 w-4.5 text-[#12B76A]" />
                     <span>เกียรตินิยมอันดับ 1</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4.5 w-4.5 text-[#12B76A]" />
                     <span>สอบติดแพทย์-วิศวะ 1,000+ คน</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="h-4.5 w-4.5 text-[#12B76A]" />
                     <span>เข้าเรียนได้ตลอดชีพ ไม่มีหมดอายุ</span>
                   </div>
                 </div>
