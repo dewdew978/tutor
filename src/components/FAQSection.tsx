@@ -63,48 +63,48 @@ export function FAQSection({
     <section id="faqs" className="py-16 sm:py-24 bg-white border-t border-[#EAECF0]">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header (Untitled UI Style) */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3">
-          <div className="inline-flex items-center gap-1.5 rounded-full bg-[#F4EBFF] px-3 py-1 text-xs font-semibold text-[#7F56D9]">
-            <HelpCircle className="h-3.5 w-3.5" />
+        <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16 space-y-4">
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#F4EBFF] px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#7F56D9]">
+            <HelpCircle className="h-4 w-4" />
             <span>คำถามที่พบบ่อย</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-[#101828]">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#101828]">
             {title}
           </h2>
 
-          <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
+          <p className="text-base sm:text-lg text-[#475467] leading-relaxed">
             {subtitle}
           </p>
         </div>
 
         {/* Accordion List */}
-        <div className="max-w-3xl mx-auto divide-y divide-[#EAECF0]">
+        <div className="max-w-4xl mx-auto divide-y divide-[#EAECF0]">
           {faqs.map((faq) => {
             const isOpen = openId === faq.id;
 
             return (
-              <div key={faq.id} className="py-5 sm:py-6">
+              <div key={faq.id} className="py-6 sm:py-7">
                 <button
                   onClick={() => toggleFAQ(faq.id)}
                   className="w-full flex items-start justify-between gap-4 text-left group cursor-pointer"
                   aria-expanded={isOpen}
                 >
-                  <span className="text-sm sm:text-base font-bold text-[#101828] group-hover:text-[#7F56D9] transition-colors">
+                  <span className="text-base sm:text-lg font-bold text-[#101828] group-hover:text-[#7F56D9] transition-colors leading-snug">
                     {faq.question}
                   </span>
 
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-[#D0D5DD] text-[#667085] group-hover:border-[#7F56D9] group-hover:text-[#7F56D9] transition-colors mt-0.5">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#D0D5DD] text-[#667085] group-hover:border-[#7F56D9] group-hover:text-[#7F56D9] transition-colors mt-0.5">
                     {isOpen ? (
-                      <Minus className="h-3.5 w-3.5" />
+                      <Minus className="h-4 w-4" />
                     ) : (
-                      <Plus className="h-3.5 w-3.5" />
+                      <Plus className="h-4 w-4" />
                     )}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="mt-3.5 text-xs sm:text-sm text-[#475467] leading-relaxed animate-in fade-in-50 duration-200">
+                  <div className="mt-4 text-sm sm:text-base text-[#475467] leading-relaxed animate-in fade-in-50 duration-200">
                     <p>{faq.answer}</p>
                   </div>
                 )}
@@ -114,30 +114,30 @@ export function FAQSection({
         </div>
 
         {/* Support CTA Box (Untitled UI Signature Box) */}
-        <div className="mt-14 max-w-3xl mx-auto rounded-2xl bg-[#F9FAFB] border border-[#EAECF0] p-6 sm:p-8 text-center space-y-4 shadow-unt-xs">
+        <div className="mt-16 max-w-4xl mx-auto rounded-3xl bg-[#F9FAFB] border border-[#EAECF0] p-8 sm:p-10 text-center space-y-5 shadow-unt-xs">
           <div className="flex justify-center -space-x-2">
             <img
               src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150"
               alt="พี่โต๋"
-              className="h-10 w-10 rounded-full object-cover ring-2 ring-white"
+              className="h-12 w-12 rounded-full object-cover ring-4 ring-white"
             />
           </div>
 
-          <div>
-            <h3 className="text-base font-bold text-[#101828]">ยังมีคำถามหรือข้อสงสัยเพิ่มเติม?</h3>
-            <p className="text-xs sm:text-sm text-[#667085] mt-1 max-w-md mx-auto">
+          <div className="space-y-2">
+            <h3 className="text-lg sm:text-xl font-bold text-[#101828]">ยังมีคำถามหรือข้อสงสัยเพิ่มเติม?</h3>
+            <p className="text-sm sm:text-base text-[#667085] max-w-lg mx-auto leading-relaxed">
               ทัก LINE มาคุยกับพี่โต๋และทีมงานวิชาการได้ตลอดเวลา เราพร้อมให้คำปรึกษาทุกคำถาม
             </p>
           </div>
 
-          <div className="pt-1">
+          <div className="pt-2">
             <a
               href="https://line.me"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-[#12B76A] px-5 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-unt-xs hover:bg-[#0E9355] transition-colors"
+              className="inline-flex items-center gap-2.5 rounded-xl bg-[#12B76A] px-6 py-3 text-sm sm:text-base font-bold text-white shadow-unt-xs hover:bg-[#0E9355] transition-colors"
             >
-              <MessageCircle className="h-4 w-4" />
+              <MessageCircle className="h-5 w-5" />
               แอด LINE สอบถามพี่โต๋
             </a>
           </div>

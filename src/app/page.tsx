@@ -180,69 +180,71 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* ABOUT P'TOH SECTION                                                       */}
         {/* ========================================================================= */}
-        <section id="about-tutor" className="py-16 sm:py-24 bg-white border-y border-[#EAECF0]">
+        <section id="about-tutor" className="py-20 sm:py-28 bg-white border-y border-[#EAECF0]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-5 space-y-4">
-                <div className="inline-flex items-center gap-1.5 rounded-full bg-[#F4EBFF] px-3 py-1 text-xs font-semibold text-[#7F56D9]">
-                  <GraduationCap className="h-3.5 w-3.5" />
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+              <div className="lg:col-span-5 space-y-6">
+                <div className="inline-flex items-center gap-2 rounded-full bg-[#F4EBFF] px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#7F56D9]">
+                  <GraduationCap className="h-4 w-4" />
                   <span>เกี่ยวกับผู้สอน</span>
                 </div>
-                <h2 className="text-3xl font-extrabold text-[#101828] tracking-tight">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight leading-tight">
                   ทำไมต้องเรียนกับ <br />
-                  พี่โต๋ (P&apos;Toh)?
+                  <span className="text-[#7F56D9]">พี่โต๋ (P&apos;Toh)?</span>
                 </h2>
-                <p className="text-sm text-[#475467] leading-relaxed">
+                <p className="text-base sm:text-lg text-[#475467] leading-relaxed">
                   {MAIN_TUTOR.bio}
                 </p>
 
-                <div className="space-y-2.5 pt-2 text-xs text-[#344054]">
+                <div className="space-y-3.5 pt-2 text-sm sm:text-base text-[#344054]">
                   {MAIN_TUTOR.education.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-[#7F56D9] shrink-0 mt-0.5" />
-                      <span>{item}</span>
+                    <div key={idx} className="flex items-start gap-3">
+                      <div className="flex h-6 w-6 items-center justify-center rounded-full bg-[#F4EBFF] text-[#7F56D9] shrink-0 mt-0.5">
+                        <Check className="h-4 w-4" />
+                      </div>
+                      <span className="font-medium">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 shadow-unt-xs">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F4EBFF] text-[#7F56D9] mb-4">
-                    <Zap className="h-5 w-5" />
+              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 sm:p-7 shadow-unt-xs hover:shadow-unt-md transition-shadow">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4EBFF] text-[#7F56D9] mb-5 shadow-unt-xs">
+                    <Zap className="h-6 w-6" />
                   </div>
-                  <h4 className="text-sm font-bold text-[#101828] mb-1">Concept ชัดเจน ไม่ต้องท่องจำ</h4>
-                  <p className="text-xs text-[#475467] leading-relaxed">
+                  <h4 className="text-base sm:text-lg font-bold text-[#101828] mb-2">Concept ชัดเจน ไม่ต้องท่องจำ</h4>
+                  <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
                     อธิบายที่มาของทุกสูตรและทฤษฎีบท ช่วยให้มองภาพออกและเชื่อมโยงสู่โจทย์ประยุกต์ยากๆ ได้อย่างเป็นธรรมชาติ
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 shadow-unt-xs">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F4EBFF] text-[#7F56D9] mb-4">
-                    <Sparkles className="h-5 w-5" />
+                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 sm:p-7 shadow-unt-xs hover:shadow-unt-md transition-shadow">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4EBFF] text-[#7F56D9] mb-5 shadow-unt-xs">
+                    <Sparkles className="h-6 w-6" />
                   </div>
-                  <h4 className="text-sm font-bold text-[#101828] mb-1">เทคนิคลัด & ตัดช้อยส์ตรงจุด</h4>
-                  <p className="text-xs text-[#475467] leading-relaxed">
+                  <h4 className="text-base sm:text-lg font-bold text-[#101828] mb-2">เทคนิคลัด & ตัดช้อยส์ตรงจุด</h4>
+                  <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
                     สูตรลัดที่ผ่านการพิสูจน์แล้วว่าใช้ได้จริงในห้องสอบ A-Level ช่วยลดเวลาคิดเลขจาก 5 นาทีเหลือเพียง 1 นาที
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 shadow-unt-xs">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F4EBFF] text-[#7F56D9] mb-4">
-                    <MessageSquare className="h-5 w-5" />
+                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 sm:p-7 shadow-unt-xs hover:shadow-unt-md transition-shadow">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4EBFF] text-[#7F56D9] mb-5 shadow-unt-xs">
+                    <MessageSquare className="h-6 w-6" />
                   </div>
-                  <h4 className="text-sm font-bold text-[#101828] mb-1">พี่โต๋ตอบคำถามเอง 100%</h4>
-                  <p className="text-xs text-[#475467] leading-relaxed">
+                  <h4 className="text-base sm:text-lg font-bold text-[#101828] mb-2">พี่โต๋ตอบคำถามเอง 100%</h4>
+                  <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
                     ระบบถาม-ตอบใต้คลิปวิดีโอ สงสัยตรงไหนพิมพ์ถามได้ตลอด พี่โต๋เข้ามาพิมพ์อธิบายให้เข้าใจอย่างละเอียด
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 shadow-unt-xs">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F4EBFF] text-[#7F56D9] mb-4">
-                    <BookOpen className="h-5 w-5" />
+                <div className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 sm:p-7 shadow-unt-xs hover:shadow-unt-md transition-shadow">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F4EBFF] text-[#7F56D9] mb-5 shadow-unt-xs">
+                    <BookOpen className="h-6 w-6" />
                   </div>
-                  <h4 className="text-sm font-bold text-[#101828] mb-1">ชีทสรุปสูตรฉบับพกพา (PDF)</h4>
-                  <p className="text-xs text-[#475467] leading-relaxed">
+                  <h4 className="text-base sm:text-lg font-bold text-[#101828] mb-2">ชีทสรุปสูตรฉบับพกพา (PDF)</h4>
+                  <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
                     เอกสารประกอบการเรียน 4 สีกราฟิกสวยงาม สรุปเนื้อหาและสูตรสำคัญทุกบท ดาวน์โหลดพิมพ์อ่านได้ตลอดชีพ
                   </p>
                 </div>
@@ -254,54 +256,54 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* TESTIMONIALS (STUDENT SUCCESS) SECTION                                    */}
         {/* ========================================================================= */}
-        <section id="testimonials" className="py-16 sm:py-24 bg-[#F9FAFB]">
+        <section id="testimonials" className="py-20 sm:py-28 bg-[#F9FAFB]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-[#ECFDF3] px-3 py-1 text-xs font-semibold text-[#027A48]">
-                <CheckCircle2 className="h-3.5 w-3.5" />
+            <div className="text-center max-w-3xl mx-auto mb-14 sm:mb-16 space-y-4">
+              <div className="inline-flex items-center gap-2 rounded-full bg-[#ECFDF3] px-4 py-1.5 text-xs sm:text-sm font-semibold text-[#027A48]">
+                <CheckCircle2 className="h-4 w-4" />
                 <span>รีวิวจากศิษย์เก่าสอบติด</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#101828] tracking-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#101828] tracking-tight leading-tight">
                 ความสำเร็จของนักเรียนคือกำลังใจที่ดีที่สุดของพี่โต๋
               </h2>
-              <p className="text-sm sm:text-base text-[#475467]">
+              <p className="text-base sm:text-lg text-[#475467] leading-relaxed">
                 รวมความประทับใจจากรุ่นพี่เตรียมอุดมฯ สวนกุหลาบ สาธิตฯ ที่สอบติดคณะในฝัน
               </p>
             </div>
 
             {/* Testimonial Cards Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {STUDENT_REVIEWS.map((review) => (
                 <div
                   key={review.id}
-                  className="rounded-2xl border border-[#EAECF0] bg-white p-6 shadow-unt-xs flex flex-col justify-between space-y-4 hover:shadow-unt-md transition-shadow"
+                  className="rounded-2xl border border-[#EAECF0] bg-white p-7 sm:p-8 shadow-unt-xs flex flex-col justify-between space-y-6 hover:shadow-unt-lg transition-all"
                 >
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-1 text-[#FDB022]">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-1.5 text-[#FDB022]">
                       {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-4 w-4 fill-[#FDB022]" />
+                        <Star key={i} className="h-5 w-5 fill-[#FDB022]" />
                       ))}
                     </div>
 
-                    <div className="inline-block rounded bg-[#F4EBFF] px-2 py-0.5 text-[11px] font-bold text-[#7F56D9]">
+                    <div className="inline-block rounded-lg bg-[#F4EBFF] px-3 py-1 text-xs sm:text-sm font-bold text-[#7F56D9] border border-[#E9D7FE]">
                       {review.score}
                     </div>
 
-                    <p className="text-xs sm:text-sm text-[#475467] leading-relaxed italic">
+                    <p className="text-sm sm:text-base text-[#344054] leading-relaxed italic">
                       &ldquo;{review.comment}&rdquo;
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3 pt-4 border-t border-[#F2F4F7]">
+                  <div className="flex items-center gap-4 pt-5 border-t border-[#F2F4F7]">
                     <img
                       src={review.avatar}
                       alt={review.studentName}
-                      className="h-10 w-10 rounded-full object-cover ring-2 ring-[#F4EBFF]"
+                      className="h-12 w-12 rounded-full object-cover ring-4 ring-[#F4EBFF]"
                     />
                     <div>
-                      <h4 className="text-xs font-bold text-[#101828]">{review.studentName}</h4>
-                      <p className="text-[11px] text-[#7F56D9] font-medium">{review.faculty}</p>
-                      <p className="text-[10px] text-[#667085]">{review.school}</p>
+                      <h4 className="text-sm sm:text-base font-bold text-[#101828]">{review.studentName}</h4>
+                      <p className="text-xs sm:text-sm text-[#7F56D9] font-semibold">{review.faculty}</p>
+                      <p className="text-xs text-[#667085]">{review.school}</p>
                     </div>
                   </div>
                 </div>
@@ -313,34 +315,34 @@ export default function HomePage() {
         {/* ========================================================================= */}
         {/* LINE CONSULTATION CTA BANNER                                              */}
         {/* ========================================================================= */}
-        <section className="py-12 bg-white">
+        <section className="py-16 sm:py-20 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl bg-gradient-to-r from-[#1D2939] to-[#101828] p-8 sm:p-12 text-white shadow-unt-xl flex flex-col lg:flex-row items-center justify-between gap-8">
-              <div className="space-y-3 text-center lg:text-left max-w-xl">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-[#E9D7FE] border border-white/15">
+            <div className="rounded-3xl bg-gradient-to-r from-[#1D2939] via-[#101828] to-[#0C111D] p-8 sm:p-14 text-white shadow-unt-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="space-y-4 text-center lg:text-left max-w-2xl">
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-[#E9D7FE] border border-white/15">
                   💬 ปรึกษาแผนการเรียนฟรี
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                <h3 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
                   ยังไม่แน่ใจว่าจะเริ่มเรียนบทไหนก่อนดี?
                 </h3>
-                <p className="text-xs sm:text-sm text-[#D0D5DD] leading-relaxed">
+                <p className="text-sm sm:text-base text-[#D0D5DD] leading-relaxed">
                   ทัก LINE มาคุยกับพี่โต๋และทีมงานเพื่อประเมินพื้นฐานและวางแผนการเรียนให้ตรงเป้าหมายของคุณได้ฟรี
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+              <div className="flex flex-col sm:flex-row items-center gap-3.5 shrink-0 w-full sm:w-auto">
                 <a
                   href="https://line.me"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl bg-[#12B76A] px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-unt-md hover:bg-[#0E9355] transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 rounded-xl bg-[#12B76A] px-7 py-3.5 text-sm sm:text-base font-bold text-white shadow-unt-md hover:bg-[#0E9355] transition-all"
                 >
-                  <MessageCircle className="h-4 w-4" />
+                  <MessageCircle className="h-5 w-5" />
                   แอด LINE ปรึกษาฟรี
                 </a>
                 <Link
                   href="/courses"
-                  className="inline-flex items-center gap-2 rounded-xl bg-white/10 border border-white/20 px-6 py-3 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 transition-all"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-white/10 border border-white/20 px-7 py-3.5 text-sm sm:text-base font-semibold text-white hover:bg-white/20 transition-all"
                 >
                   เลือกดูคอร์สเรียน
                 </Link>
