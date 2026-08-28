@@ -1,0 +1,276 @@
+// Prisma Schema for Multi-Tutor Video Course LMS Platform
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite" // เปลี่ยนเป็น "postgresql" เมื่อใช้ Supabase / PostgreSQL จริง
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  name              String
+  passwordHash      String?
+  image             String?
+  role              String    @default("STUDENT") // "STUDENT" | "INSTRUCTOR" | "ADMIN"
+  bio               String?
+  headline          String?   // เช่น "อดีตตัวแทนโอลิมปิกวิชาการ / เกียรตินิยมอันดับ 1 วิศวะ จุฬาฯ"
+  phoneNumber       String?
+  socialLinks       String?   // JSON string
+  
+  // ข้อมูลบัญชีสำหรับรับเงินโอนของติวเตอร์
+  bankName          String?
+  bankAccountNumber String?
+  bankAccountName   String?
+  isVerifiedTutor   Boolean   @default(false)
+
+  // Relations
+  coursesCreated    Course[]            @relation("InstructorCourses")
+  enrollments       Enrollment[]
+  reviews           Review[]
+  lessonProgress    LessonProgress[]
+  questions         Question[]
+  answers           Answer[]
+  payouts           Payout[]
+  tutorApplication  TutorApplication?
+
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+// ใบสมัครขอเป็นติวเตอร์
+model TutorApplication {
+  id                 String            @id @default(cuid())
+  userId             String            @unique
+  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status             String            @default("PENDING") // "PENDING" | "APPROVED" | "REJECTED"
+  resumeUrl          String?
+  introVideoUrl      String?
+  idCardUrl          String?
+  educationHistory   String
+  teachingExperience String
+  subjectsToTeach    String
+  adminFeedback      String?
+
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+}
+
+// หมวดหมู่วิชา
+model Category {
+  id          String    @id @default(cuid())
+  name        String    // e.g. "คณิตศาสตร์", "ฟิสิกส์", "ภาษาอังกฤษ", "การเขียนโปรแกรม"
+  slug        String    @unique
+  icon        String?   // Lucide icon name or emoji
+  description String?
+  courses     Course[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// คอร์สเรียน
+model Course {
+  id               String       @id @default(cuid())
+  title            String
+  slug             String       @unique
+  subtitle         String?
+  description      String
+  coverImage       String?
+  trailerVideoUrl  String?
+  
+  price            Float        @default(0)
+  salePrice        Float?       // ราคาโปรโมชั่น
+  level            String       @default("ALL_LEVELS") // "BEGINNER" | "INTERMEDIATE" | "ADVANCED" | "ALL_LEVELS"
+  status           String       @default("DRAFT") // "DRAFT" | "PENDING_REVIEW" | "PUBLISHED" | "ARCHIVED"
+  language         String       @default("th")
+  
+  // สิ่งที่จะได้รับ และ ข้อกำหนดก่อนเรียน (JSON String)
+  whatYouWillLearn String?      // JSON array string
+  requirements     String?      // JSON array string
+  isFeatured       Boolean      @default(false)
+
+  // Relations
+  instructorId     String
+  instructor       User         @relation("InstructorCourses", fields: [instructorId], references: [id], onDelete: Cascade)
+  
+  categoryId       String?
+  category         Category?    @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  chapters         Chapter[]
+  enrollments      Enrollment[]
+  reviews          Review[]
+
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+}
+
+// บทเรียนหลัก (Module / Chapter)
+model Chapter {
+  id          String    @id @default(cuid())
+  title       String    // e.g. "บทที่ 1: ปูพื้นฐานฟังก์ชันและอนุพันธ์"
+  description String?
+  position    Int       @default(0)
+  isPublished Boolean   @default(true)
+
+  courseId    String
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  lessons     Lesson[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// บทเรียนย่อย (Lesson / Video Clip)
+model Lesson {
+  id            String          @id @default(cuid())
+  title         String          // e.g. "1.1 สูตรอนุพันธ์ที่พบบ่อย พร้อมตัวอย่างข้อสอบ"
+  description   String?
+  position      Int             @default(0)
+  
+  videoUrl      String?         // URL หรือ Video ID (Cloudflare Stream, Mux, YouTube, Vimeo)
+  videoProvider String?         // "cloudflare" | "mux" | "youtube" | "vimeo"
+  videoDuration Int             @default(0) // ความยาวคลิปหน่วยเป็นวินาที (seconds)
+  
+  isFreePreview Boolean         @default(false) // ให้ทดลองเรียนฟรีได้หรือไม่
+  isPublished   Boolean         @default(true)
+
+  chapterId     String
+  chapter       Chapter         @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  attachments   Attachment[]
+  progress      LessonProgress[]
+  questions     Question[]
+
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+// ไฟล์เอกสารประกอบการเรียน (PDF ชีทสรุป, โจทย์)
+model Attachment {
+  id        String   @id @default(cuid())
+  title     String   // e.g. "เอกสารประกอบการเรียน บทที่ 1 (PDF)"
+  fileUrl   String
+  fileSize  String?  // e.g. "2.4 MB"
+  fileType  String?  // "pdf", "zip", etc.
+
+  lessonId  String
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
+
+// การลงทะเบียน / สั่งซื้อคอร์ส
+model Enrollment {
+  id            String    @id @default(cuid())
+  studentId     String
+  student       User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  courseId      String
+  course        Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  pricePaid     Float
+  status        String    @default("COMPLETED") // "PENDING" | "COMPLETED" | "REFUNDED"
+  paymentMethod String?   // "PROMPTPAY" | "CREDIT_CARD" | "SLIP_VERIFICATION"
+  slipImageUrl  String?
+
+  completedAt   DateTime? // วันที่เรียนจบครบทุกบทเรียน
+
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([studentId, courseId])
+}
+
+// ความก้าวหน้าการเรียนแต่ละคลิป
+model LessonProgress {
+  id                String    @id @default(cuid())
+  studentId         String
+  student           User      @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  lessonId          String
+  lesson            Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  isCompleted       Boolean   @default(false)
+  lastPlayedSeconds Int       @default(0) // วินาทีที่หยุดดูล่าสุด
+
+  completedAt       DateTime?
+  updatedAt         DateTime  @updatedAt
+
+  @@unique([studentId, lessonId])
+}
+
+// รีวิวและคะแนนคอร์ส
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int      // 1 to 5
+  comment   String?
+
+  studentId String
+  student   User     @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  courseId  String
+  course    Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([studentId, courseId])
+}
+
+// กระดานถาม-ตอบในบทเรียน (Q&A)
+model Question {
+  id        String   @id @default(cuid())
+  title     String?
+  content   String
+
+  lessonId  String
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  answers   Answer[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// คำตอบใน Q&A
+model Answer {
+  id           String   @id @default(cuid())
+  content      String
+  isFromTutor  Boolean  @default(false)
+
+  questionId   String
+  question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// บันทึกการจ่ายเงิน / เบิกรายได้ของติวเตอร์ (Payout)
+model Payout {
+  id             String    @id @default(cuid())
+  instructorId   String
+  instructor     User      @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  totalAmount    Float     // ยอดขายรวม
+  commissionFee  Float     // ค่าธรรมเนียมระบบ (เช่น 20%)
+  netAmount      Float     // ยอดสุทธิที่ติวเตอร์ได้รับ
+
+  status         String    @default("PENDING") // "PENDING" | "PROCESSING" | "PAID" | "REJECTED"
+  slipUrl        String?   // สลิปโอนเงินให้ติวเตอร์
+  note           String?
+  paidAt         DateTime?
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
