@@ -104,7 +104,7 @@ export default function LoginPage() {
 
           <div className="space-y-2 mb-8">
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#101828] tracking-tight">
-              ยินดีต้อนรับกลับสู่ห้องเรียน 👋
+              ยินดีต้อนรับกลับสู่ห้องเรียน
             </h1>
             <p className="text-xs sm:text-sm text-[#667085]">
               เข้าสู่ระบบเพื่อดูบทเรียนวิดีโอ ดาวน์โหลดชีทสรุป และเรียนต่อได้ทันที

@@ -136,7 +136,7 @@ export default function SignupPage() {
               <span>สร้างบัญชีผู้เรียนฟรีใน 1 นาที</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#101828] tracking-tight">
-              เริ่มต้นติวเข้มและสอบติดกับพี่โต๋ 🎓
+              เริ่มต้นติวเข้มและสอบติดกับพี่โต๋
             </h1>
             <p className="text-xs sm:text-sm text-[#667085]">
               สมัครสมาชิกครั้งเดียว เข้าเรียนบทเรียนฟรีและสั่งซื้อคอร์สเรียนได้ตลอดชีพ

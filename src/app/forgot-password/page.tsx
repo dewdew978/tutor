@@ -56,7 +56,7 @@ export default function ForgotPasswordPage() {
         {/* Header Title */}
         <div className="space-y-1">
           <h1 className="text-xl sm:text-2xl font-extrabold text-[#101828]">
-            ลืมรหัสผ่านใช่ไหม? 🔑
+            ลืมรหัสผ่านใช่ไหม?
           </h1>
           <p className="text-xs text-[#667085]">
             ไม่ต้องกังวลครับ กรอกอีเมลที่ใช้ลงทะเบียน เราจะส่งลิงก์สำหรับตั้งรหัสผ่านใหม่ไปให้
