@@ -71,7 +71,7 @@ export default function CoursesPage() {
 
               <div className="inline-flex items-center gap-1.5 rounded-full bg-[#F4EBFF] px-3.5 py-1 text-xs font-semibold text-[#7F56D9] border border-[#E9D7FE]">
                 <BookOpen className="h-3.5 w-3.5" />
-                <span>คลังคอร์สเรียนวิชาการ ม.ปลาย โดย พี่แม็ก จุฬาฯ</span>
+                <span>คลังคอร์สเรียนวิชาการ ม.ปลาย โดย พี่โต๋</span>
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#101828]">
@@ -193,7 +193,7 @@ export default function CoursesPage() {
                     ไม่แน่ใจว่าพื้นฐานตัวเองเหมาะกับคอร์สไหน?
                   </h3>
                   <p className="text-xs text-[#475467] mt-0.5">
-                    ทัก LINE ส่งเกรดหรือข้อสอบล่าสุดมาให้พี่แม็กช่วยวางแผนการเรียนให้ตรงเป้าหมายได้ฟรี
+                    ทัก LINE ส่งเกรดหรือข้อสอบล่าสุดมาให้พี่โต๋ช่วยวางแผนการเรียนให้ตรงเป้าหมายได้ฟรี
                   </p>
                 </div>
               </div>

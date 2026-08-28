@@ -68,10 +68,10 @@ export default function LearnClassroomPage({ params }: PageProps) {
       avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150",
       time: "2 ชั่วโมงที่แล้ว",
       lessonName: "1.1 ภาพรวมแคลคูลัส",
-      question: "ตรงกฎโลปิตาล ถ้าดิฟแล้วยังได้ 0/0 อยู่ สามารถดิฟรอบที่ 2 ต่อได้เลยไหมครับพี่แม็ก?",
+      question: "ตรงกฎโลปิตาล ถ้าดิฟแล้วยังได้ 0/0 อยู่ สามารถดิฟรอบที่ 2 ต่อได้เลยไหมครับพี่โต๋?",
       likes: 8,
       reply: "ดิฟต่อได้เลยครับน้องกานต์! ตราบใดที่ยังอยู่ในรูป indeterminate form (0/0 หรือ inf/inf) สามารถทำซ้ำได้เรื่อยๆ เลยครับ อย่าลืมเช็คเงื่อนไขก่อนดิฟทุกครั้งนะ",
-      replyBy: "พี่แม็ก จุฬาฯ",
+      replyBy: "พี่โต๋ (ผู้สอน)",
     },
     {
       id: "q2",
@@ -79,10 +79,10 @@ export default function LearnClassroomPage({ params }: PageProps) {
       avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=150",
       time: "1 วันที่แล้ว",
       lessonName: "1.2 กฎของโลปิตาล",
-      question: "พี่แม็กครับ ข้อ 4 ในชีท โจทย์กำหนด f(x) ต่อเนื่อง เราต้องเช็คลิมิตซ้ายเท่ากับลิมิตขวาด้วยใช่ไหมครับ?",
+      question: "พี่โต๋ครับ ข้อ 4 ในชีท โจทย์กำหนด f(x) ต่อเนื่อง เราต้องเช็คลิมิตซ้ายเท่ากับลิมิตขวาด้วยใช่ไหมครับ?",
       likes: 4,
       reply: "ถูกต้องครับน้องเต๋า ความต่อเนื่องต้องครบ 3 เงื่อนไข: 1. หาค่า f(a) ได้ 2. ลิมิตซ้าย=ขวา 3. ลิมิตเท่ากับค่า f(a) ครับ",
-      replyBy: "พี่แม็ก จุฬาฯ",
+      replyBy: "พี่โต๋ (ผู้สอน)",
     },
   ]);
   const [newQuestionText, setNewQuestionText] = useState("");
@@ -125,8 +125,8 @@ export default function LearnClassroomPage({ params }: PageProps) {
         lessonName: activeLesson.title,
         question: newQuestionText,
         likes: 0,
-        reply: "พี่แม็กได้รับคำถามแล้ว กำลังเตรียมพิมพ์ตอบกลับให้อย่างละเอียดครับ...",
-        replyBy: "พี่แม็ก จุฬาฯ",
+        reply: "พี่โต๋ได้รับคำถามแล้ว กำลังเตรียมพิมพ์ตอบกลับให้อย่างละเอียดครับ...",
+        replyBy: "พี่โต๋ (ผู้สอน)",
       },
       ...questions,
     ]);
@@ -207,7 +207,7 @@ export default function LearnClassroomPage({ params }: PageProps) {
               key={activeLesson.videoUrl}
               src={activeLesson.videoUrl}
               title={activeLesson.title}
-              watermarkText={`P'Max Academy • รหัสนักเรียน: 10482`}
+              watermarkText={`P'Toh Tutor • รหัสนักเรียน: 10482`}
               onEnded={() => {
                 if (!completedLessonIds.includes(activeLesson.id)) {
                   setCompletedLessonIds((prev) => [...prev, activeLesson.id]);
@@ -316,7 +316,7 @@ export default function LearnClassroomPage({ params }: PageProps) {
                 }`}
               >
                 <MessageSquare className="h-4 w-4" />
-                <span>ถาม-ตอบกับพี่แม็ก ({questions.length})</span>
+                <span>ถาม-ตอบกับพี่โต๋ ({questions.length})</span>
               </button>
 
               <button
@@ -422,7 +422,7 @@ export default function LearnClassroomPage({ params }: PageProps) {
               </div>
             )}
 
-            {/* TAB 3: Q&A DISCUSSION WITH P'MAX */}
+            {/* TAB 3: Q&A DISCUSSION WITH P'TOH */}
             {activeTab === "qa" && (
               <div className="space-y-6">
                 {/* Form to submit question */}
@@ -435,12 +435,12 @@ export default function LearnClassroomPage({ params }: PageProps) {
                     rows={3}
                     value={newQuestionText}
                     onChange={(e) => setNewQuestionText(e.target.value)}
-                    placeholder="เช่น ในนาทีที่ 05:20 บรรทัดที่ 3 ที่มาของสูตรตรงนี้คิดอย่างไรครับพี่แม็ก..."
+                    placeholder="เช่น ในนาทีที่ 05:20 บรรทัดที่ 3 ที่มาของสูตรตรงนี้คิดอย่างไรครับพี่โต๋..."
                     className="w-full rounded-xl border border-[#D0D5DD] p-3 text-xs text-[#101828] placeholder:text-[#667085] shadow-unt-xs focus:border-[#7F56D9] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] resize-none"
                   />
                   <div className="flex justify-between items-center pt-2 border-t border-[#EAECF0]">
                     <span className="text-[11px] text-[#667085]">
-                      พี่แม็กจะเข้ามาตอบกลับคำถามด้วยตัวเองภายใน 24 ชม.
+                      พี่โต๋จะเข้ามาตอบกลับคำถามด้วยตัวเองภายใน 24 ชม.
                     </span>
                     <button
                       type="submit"

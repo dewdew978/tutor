@@ -50,7 +50,7 @@ export default function HomePage() {
 
                 {/* Subtitle */}
                 <p className="text-base sm:text-lg text-[#475467] max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                  ปูพื้นฐานจากความเข้าใจลึกซึ้ง ลุยโจทย์ข้อสอบแข่งขันจริงย้อนหลังกว่า 15 ปี ไม่เน้นท่องจำ พร้อมเอกสารสรุป PDF และระบบถาม-ตอบกับพี่แม็กโดยตรง
+                  ปูพื้นฐานจากความเข้าใจลึกซึ้ง ลุยโจทย์ข้อสอบแข่งขันจริงย้อนหลังกว่า 15 ปี ไม่เน้นท่องจำ พร้อมเอกสารสรุป PDF และระบบถาม-ตอบกับพี่โต๋โดยตรง
                 </p>
 
                 {/* Dual CTA Buttons */}
@@ -76,7 +76,7 @@ export default function HomePage() {
                 <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-[#475467]">
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
-                    <span>เกียรตินิยมอันดับ 1 วิศวะ จุฬาฯ</span>
+                    <span>เกียรตินิยมอันดับ 1</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
@@ -178,7 +178,7 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* ABOUT P'MAX SECTION                                                       */}
+        {/* ABOUT P'TOH SECTION                                                       */}
         {/* ========================================================================= */}
         <section id="about-tutor" className="py-16 sm:py-24 bg-white border-y border-[#EAECF0]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -190,7 +190,7 @@ export default function HomePage() {
                 </div>
                 <h2 className="text-3xl font-extrabold text-[#101828] tracking-tight">
                   ทำไมต้องเรียนกับ <br />
-                  พี่แม็ก จุฬาฯ?
+                  พี่โต๋ (P&apos;Toh)?
                 </h2>
                 <p className="text-sm text-[#475467] leading-relaxed">
                   {MAIN_TUTOR.bio}
@@ -231,9 +231,9 @@ export default function HomePage() {
                   <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#F4EBFF] text-[#7F56D9] mb-4">
                     <MessageSquare className="h-5 w-5" />
                   </div>
-                  <h4 className="text-sm font-bold text-[#101828] mb-1">พี่แม็กตอบคำถามเอง 100%</h4>
+                  <h4 className="text-sm font-bold text-[#101828] mb-1">พี่โต๋ตอบคำถามเอง 100%</h4>
                   <p className="text-xs text-[#475467] leading-relaxed">
-                    ระบบถาม-ตอบใต้คลิปวิดีโอ สงสัยตรงไหนพิมพ์ถามได้ตลอด พี่แม็กเข้ามาพิมพ์อธิบายให้เข้าใจอย่างละเอียด
+                    ระบบถาม-ตอบใต้คลิปวิดีโอ สงสัยตรงไหนพิมพ์ถามได้ตลอด พี่โต๋เข้ามาพิมพ์อธิบายให้เข้าใจอย่างละเอียด
                   </p>
                 </div>
 
@@ -252,50 +252,56 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* STUDENT SUCCESS STORIES & REVIEWS                                         */}
+        {/* TESTIMONIALS (STUDENT SUCCESS) SECTION                                    */}
         {/* ========================================================================= */}
-        <section id="testimonials" className="py-20 bg-white">
+        <section id="testimonials" className="py-16 sm:py-24 bg-[#F9FAFB]">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-2xl mx-auto mb-14">
-              <div className="inline-flex items-center gap-1.5 rounded-full bg-[#ECFDF3] px-3 py-1 text-xs font-semibold text-[#027A48] mb-3">
-                <Award className="h-3.5 w-3.5" />
-                <span>Hall of Fame & Testimonials</span>
+            <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+              <div className="inline-flex items-center gap-1.5 rounded-full bg-[#ECFDF3] px-3 py-1 text-xs font-semibold text-[#027A48]">
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                <span>รีวิวจากศิษย์เก่าสอบติด</span>
               </div>
-              <h2 className="text-3xl font-extrabold text-[#101828] tracking-tight">
-                เสียงยืนยันจากรุ่นพี่ที่สอบติดจริง
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#101828] tracking-tight">
+                ความสำเร็จของนักเรียนคือกำลังใจที่ดีที่สุดของพี่โต๋
               </h2>
-              <p className="mt-2 text-sm text-[#475467]">
-                ความสำเร็จของนักเรียนคือกำลังใจที่ดีที่สุดของพี่แม็ก
+              <p className="text-sm sm:text-base text-[#475467]">
+                รวมความประทับใจจากรุ่นพี่เตรียมอุดมฯ สวนกุหลาบ สาธิตฯ ที่สอบติดคณะในฝัน
               </p>
             </div>
 
+            {/* Testimonial Cards Grid */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {STUDENT_REVIEWS.map((rev) => (
+              {STUDENT_REVIEWS.map((review) => (
                 <div
-                  key={rev.id}
-                  className="rounded-2xl border border-[#EAECF0] bg-[#F9FAFB] p-6 shadow-unt-xs flex flex-col justify-between"
+                  key={review.id}
+                  className="rounded-2xl border border-[#EAECF0] bg-white p-6 shadow-unt-xs flex flex-col justify-between space-y-4 hover:shadow-unt-md transition-shadow"
                 >
                   <div className="space-y-3">
-                    <div className="flex text-[#FDB022]">
+                    <div className="flex items-center gap-1 text-[#FDB022]">
                       {[...Array(5)].map((_, i) => (
                         <Star key={i} className="h-4 w-4 fill-[#FDB022]" />
                       ))}
                     </div>
-                    <p className="text-xs text-[#344054] leading-relaxed italic">
-                      &ldquo;{rev.comment}&rdquo;
+
+                    <div className="inline-block rounded bg-[#F4EBFF] px-2 py-0.5 text-[11px] font-bold text-[#7F56D9]">
+                      {review.score}
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-[#475467] leading-relaxed italic">
+                      &ldquo;{review.comment}&rdquo;
                     </p>
                   </div>
 
-                  <div className="pt-5 mt-4 border-t border-[#EAECF0] flex items-center gap-3">
+                  <div className="flex items-center gap-3 pt-4 border-t border-[#F2F4F7]">
                     <img
-                      src={rev.avatar}
-                      alt={rev.studentName}
-                      className="h-10 w-10 rounded-full object-cover border border-[#D0D5DD]"
+                      src={review.avatar}
+                      alt={review.studentName}
+                      className="h-10 w-10 rounded-full object-cover ring-2 ring-[#F4EBFF]"
                     />
                     <div>
-                      <h4 className="text-xs font-bold text-[#101828]">{rev.studentName}</h4>
-                      <p className="text-[11px] text-[#7F56D9] font-semibold">{rev.faculty}</p>
-                      <p className="text-[10px] text-[#667085]">{rev.score}</p>
+                      <h4 className="text-xs font-bold text-[#101828]">{review.studentName}</h4>
+                      <p className="text-[11px] text-[#7F56D9] font-medium">{review.faculty}</p>
+                      <p className="text-[10px] text-[#667085]">{review.school}</p>
                     </div>
                   </div>
                 </div>
@@ -305,48 +311,48 @@ export default function HomePage() {
         </section>
 
         {/* ========================================================================= */}
-        {/* FREQUENTLY ASKED QUESTIONS (FAQ SECTION)                                  */}
+        {/* LINE CONSULTATION CTA BANNER                                              */}
         {/* ========================================================================= */}
-        <FAQSection />
-
-        {/* ========================================================================= */}
-        {/* LINE ADVISORY CTA BANNER                                                  */}
-        {/* ========================================================================= */}
-        <section className="bg-white py-14 border-t border-[#EAECF0]">
+        <section className="py-12 bg-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="rounded-3xl bg-[#53389E] px-6 py-12 sm:px-12 sm:py-16 text-center text-white shadow-unt-xl relative overflow-hidden">
-              <div className="relative max-w-2xl mx-auto space-y-4">
-                <span className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-[#E9D7FE] border border-white/20">
-                  ปรึกษาแผนการเรียนฟรี 💬
+            <div className="rounded-3xl bg-gradient-to-r from-[#1D2939] to-[#101828] p-8 sm:p-12 text-white shadow-unt-xl flex flex-col lg:flex-row items-center justify-between gap-8">
+              <div className="space-y-3 text-center lg:text-left max-w-xl">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-[#E9D7FE] border border-white/15">
+                  💬 ปรึกษาแผนการเรียนฟรี
                 </span>
-                <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-                  ไม่แน่ใจว่าจะเริ่มเรียนจากคอร์สไหนดี?
-                </h2>
-                <p className="text-sm text-[#E9D7FE] leading-relaxed">
-                  ทัก LINE มาคุยกับพี่แม็กและทีมงานเพื่อประเมินพื้นฐานและวางแผนการเรียนให้ตรงเป้าหมายของคุณได้ฟรี
+                <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+                  ยังไม่แน่ใจว่าจะเริ่มเรียนบทไหนก่อนดี?
+                </h3>
+                <p className="text-xs sm:text-sm text-[#D0D5DD] leading-relaxed">
+                  ทัก LINE มาคุยกับพี่โต๋และทีมงานเพื่อประเมินพื้นฐานและวางแผนการเรียนให้ตรงเป้าหมายของคุณได้ฟรี
                 </p>
+              </div>
 
-                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-3">
-                  <a
-                    href="https://line.me"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-lg bg-[#12B76A] px-6 py-3 text-sm font-semibold text-white shadow-unt-md hover:bg-[#0E9355] transition-all"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    แอด LINE เพื่อปรึกษาฟรี
-                  </a>
-                  <Link
-                    href="/courses"
-                    className="w-full sm:w-auto rounded-lg border border-white/30 bg-white/10 px-5 py-3 text-sm font-semibold text-white hover:bg-white/20 transition-all"
-                  >
-                    ดูคอร์สทั้งหมด ({MOCK_COURSES.length})
-                  </Link>
-                </div>
+              <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+                <a
+                  href="https://line.me"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-xl bg-[#12B76A] px-6 py-3 text-xs sm:text-sm font-bold text-white shadow-unt-md hover:bg-[#0E9355] transition-all"
+                >
+                  <MessageCircle className="h-4 w-4" />
+                  แอด LINE ปรึกษาฟรี
+                </a>
+                <Link
+                  href="/courses"
+                  className="inline-flex items-center gap-2 rounded-xl bg-white/10 border border-white/20 px-6 py-3 text-xs sm:text-sm font-semibold text-white hover:bg-white/20 transition-all"
+                >
+                  เลือกดูคอร์สเรียน
+                </Link>
               </div>
             </div>
           </div>
         </section>
+
+        {/* ========================================================================= */}
+        {/* FREQUENTLY ASKED QUESTIONS (FAQ SECTION)                                  */}
+        {/* ========================================================================= */}
+        <FAQSection />
       </main>
 
       <Footer />

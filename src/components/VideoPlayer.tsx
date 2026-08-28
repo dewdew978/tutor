@@ -42,7 +42,7 @@ export function VideoPlayer({
   title,
   poster,
   autoPlay = false,
-  watermarkText = "P'Max Academy • ID: 10482",
+  watermarkText = "P'Toh Tutor • ID: 10482",
   onEnded,
   onNextLesson,
   nextLessonTitle,

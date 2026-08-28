@@ -81,7 +81,7 @@ export default function InstructorDashboardPage() {
       studentName: "น้องกานต์",
       courseTitle: "พิชิตแคลคูลัสและฟังก์ชัน ม.ปลาย",
       lessonTitle: "1.2 กฎของโลปิตาล",
-      question: "ตรงกฎโลปิตาล ถ้าดิฟแล้วยังได้ 0/0 อยู่ สามารถดิฟรอบที่ 2 ต่อได้เลยไหมครับพี่แม็ก?",
+      question: "ตรงกฎโลปิตาล ถ้าดิฟแล้วยังได้ 0/0 อยู่ สามารถดิฟรอบที่ 2 ต่อได้เลยไหมครับพี่โต๋?",
       status: "ANSWERED",
       reply: "ดิฟต่อได้เลยครับน้องกานต์! ตราบใดที่ยังอยู่ในรูป indeterminate form (0/0 หรือ inf/inf) สามารถทำซ้ำได้เรื่อยๆ เลยครับ",
     },
@@ -90,7 +90,7 @@ export default function InstructorDashboardPage() {
       studentName: "น้องเต๋า",
       courseTitle: "ฟิสิกส์ ม.ปลาย: ไฟฟ้า & แม่เหล็ก",
       lessonTitle: "2.1 กฎของโอห์มและการต่อวงจร",
-      question: "พี่แม็กครับ วงจรข้อ 5 ในชีท ตรงความต้านทาน R3 ทำไมถึงลัดวงจรตัดทิ้งได้เหรอครับ?",
+      question: "พี่โต๋ครับ วงจรข้อ 5 ในชีท ตรงความต้านทาน R3 ทำไมถึงลัดวงจรตัดทิ้งได้เหรอครับ?",
       status: "PENDING",
       reply: "",
     },
@@ -119,7 +119,7 @@ export default function InstructorDashboardPage() {
       id: `course-${Date.now()}`,
       title: newTitle,
       slug: `custom-${Date.now()}`,
-      subtitle: newSubtitle || "คอร์สเรียนเข้มข้น จัดทำโดยพี่แม็ก จุฬาฯ",
+      subtitle: newSubtitle || "คอร์สเรียนเข้มข้น จัดทำโดยพี่โต๋",
       price: parseFloat(newPrice) || 2500,
       salePrice: undefined,
       category: newCategory,
@@ -159,7 +159,7 @@ export default function InstructorDashboardPage() {
                 </Link>
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#101828]">
-                แดชบอร์ดจัดการระบบ (P&apos;Max Backoffice)
+                แดชบอร์ดจัดการระบบ (P&apos;Toh Backoffice)
               </h1>
               <p className="text-xs text-[#667085] mt-0.5">
                 ติดตามรายได้ ยอดลงทะเบียนของนักเรียน และตอบคำถาม Q&A
@@ -273,7 +273,7 @@ export default function InstructorDashboardPage() {
           {isCreatingCourse && (
             <div className="rounded-2xl border border-[#D0D5DD] bg-white p-6 shadow-unt-lg space-y-4">
               <div className="flex items-center justify-between border-b border-[#EAECF0] pb-3">
-                <h3 className="text-base font-bold text-[#101828]">✨ เพิ่มคอร์สเรียนใหม่ของพี่แม็ก</h3>
+                <h3 className="text-base font-bold text-[#101828]">✨ เพิ่มคอร์สเรียนใหม่ของพี่โต๋</h3>
                 <button
                   onClick={() => setIsCreatingCourse(false)}
                   className="text-xs text-[#667085] hover:text-[#101828]"
@@ -367,7 +367,7 @@ export default function InstructorDashboardPage() {
             <div className="rounded-2xl border border-[#EAECF0] bg-white overflow-hidden shadow-unt-xs">
               <div className="p-5 border-b border-[#EAECF0] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-[#101828]">คอร์สเรียนของพี่แม็กทั้งหมด</h3>
+                  <h3 className="text-base font-bold text-[#101828]">คอร์สเรียนของพี่โต๋ทั้งหมด</h3>
                   <p className="text-xs text-[#667085]">จัดการบทเรียน แก้ไขราคา และอัปโหลดไฟล์เอกสาร</p>
                 </div>
 
@@ -554,7 +554,7 @@ export default function InstructorDashboardPage() {
                     {qa.reply && (
                       <div className="rounded-lg bg-[#F4EBFF] border border-[#E9D7FE] p-3 space-y-1">
                         <span className="font-bold text-[#7F56D9] text-[11px]">
-                          คำตอบจากพี่แม็ก:
+                          คำตอบจากพี่โต๋:
                         </span>
                         <p className="text-[#344054]">{qa.reply}</p>
                       </div>

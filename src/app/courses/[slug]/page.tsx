@@ -218,7 +218,7 @@ export default function CourseDetailPage({ params }: PageProps) {
                     </div>
                     <div className="flex items-center gap-2.5">
                       <Check className="h-4 w-4 text-[#75E0A7] shrink-0" />
-                      <span>ถามข้อสงสัยกับพี่แม็กได้โดยตรงใต้คลิป</span>
+                      <span>ถามข้อสงสัยกับพี่โต๋ได้โดยตรงใต้คลิป</span>
                     </div>
                   </div>
                 </div>
@@ -352,7 +352,7 @@ export default function CourseDetailPage({ params }: PageProps) {
                 {/* About Instructor */}
                 <div className="rounded-2xl border border-[#EAECF0] bg-white p-6 sm:p-8 shadow-unt-xs space-y-4">
                   <h3 className="text-lg font-bold text-[#101828]">
-                    เกี่ยวกับพี่แม็ก จุฬาฯ
+                    เกี่ยวกับพี่โต๋ (ผู้สอน)
                   </h3>
 
                   <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">

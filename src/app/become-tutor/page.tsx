@@ -128,7 +128,7 @@ export default function BecomeTutorPage() {
                   <input
                     type="text"
                     required
-                    placeholder="เช่น พี่ปอนด์ จุฬาฯ, ครูเอมี่"
+                    placeholder="เช่น พี่ปอนด์, ครูเอมี่"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full rounded-lg border border-[#D0D5DD] bg-white px-3.5 py-2 text-xs text-[#101828] shadow-unt-xs focus:border-[#7F56D9] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF]"

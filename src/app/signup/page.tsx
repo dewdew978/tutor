@@ -117,7 +117,7 @@ export default function SignupPage() {
                 <GraduationCap className="h-5 w-5" />
               </div>
               <span className="text-lg font-extrabold text-[#101828] tracking-tight">
-                P&apos;Max Academy
+                P&apos;Toh Tutor
               </span>
             </Link>
 
@@ -136,7 +136,7 @@ export default function SignupPage() {
               <span>สร้างบัญชีผู้เรียนฟรีใน 1 นาที</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-[#101828] tracking-tight">
-              เริ่มต้นติวเข้มและสอบติดกับพี่แม็ก 🎓
+              เริ่มต้นติวเข้มและสอบติดกับพี่โต๋ 🎓
             </h1>
             <p className="text-xs sm:text-sm text-[#667085]">
               สมัครสมาชิกครั้งเดียว เข้าเรียนบทเรียนฟรีและสั่งซื้อคอร์สเรียนได้ตลอดชีพ
@@ -357,7 +357,7 @@ export default function SignupPage() {
 
         {/* Bottom copyright */}
         <div className="pt-6 text-center text-[11px] text-[#98A2B3]">
-          © {new Date().getFullYear()} P&apos;Max Academy. สงวนลิขสิทธิ์ทุกประการ
+          © {new Date().getFullYear()} P&apos;Toh Tutor. สงวนลิขสิทธิ์ทุกประการ
         </div>
       </div>
 
@@ -370,7 +370,7 @@ export default function SignupPage() {
         <div className="relative z-10 flex items-center justify-between">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/20 px-3 py-1 text-xs font-semibold text-white border border-white/30 backdrop-blur-xs">
             <GraduationCap className="h-3.5 w-3.5" />
-            สิทธิประโยชน์ของนักเรียน P&apos;Max
+            สิทธิประโยชน์ของนักเรียน P&apos;Toh
           </span>
           <span className="text-xs text-[#E9D7FE]">Lifetime Access</span>
         </div>
@@ -407,8 +407,8 @@ export default function SignupPage() {
                 <Check className="h-4 w-4" />
               </div>
               <div>
-                <h4 className="text-xs font-bold text-white">ถาม-ตอบ Q&A กับพี่แม็กโดยตรง</h4>
-                <p className="text-[11px] text-[#E9D7FE] mt-0.5">สงสัยโจทย์ข้อไหนพิมพ์ถามใต้คลิป พี่แม็กเข้ามาตอบให้อย่างละเอียด 100%</p>
+                <h4 className="text-xs font-bold text-white">ถาม-ตอบ Q&A กับพี่โต๋โดยตรง</h4>
+                <p className="text-[11px] text-[#E9D7FE] mt-0.5">สงสัยโจทย์ข้อไหนพิมพ์ถามใต้คลิป พี่โต๋เข้ามาตอบให้อย่างละเอียด 100%</p>
               </div>
             </div>
           </div>

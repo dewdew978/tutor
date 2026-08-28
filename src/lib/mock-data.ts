@@ -1,4 +1,4 @@
-export interface Tutor {
+export interface TutorProfile {
   id: string;
   name: string;
   avatar: string;
@@ -13,12 +13,37 @@ export interface Tutor {
   achievements: string[];
 }
 
-export interface AttachmentItem {
+export type Tutor = TutorProfile;
+
+export interface CourseItem {
   id: string;
   title: string;
-  fileSize: string;
-  fileType: string;
-  downloadUrl: string;
+  slug: string;
+  subtitle: string;
+  description: string;
+  coverImage: string;
+  trailerVideoUrl: string;
+  price: number;
+  salePrice?: number;
+  level: string;
+  category: string;
+  categorySlug: string;
+  instructor: TutorProfile;
+  totalDurationHours: number;
+  totalLessons: number;
+  rating: number;
+  reviewCount: number;
+  studentCount: number;
+  isFeatured: boolean;
+  whatYouWillLearn: string[];
+  requirements: string[];
+  chapters: ChapterItem[];
+}
+
+export interface ChapterItem {
+  id: string;
+  title: string;
+  lessons: LessonItem[];
 }
 
 export interface LessonItem {
@@ -31,36 +56,12 @@ export interface LessonItem {
   attachments?: AttachmentItem[];
 }
 
-export interface ChapterItem {
+export interface AttachmentItem {
   id: string;
   title: string;
-  description?: string;
-  lessons: LessonItem[];
-}
-
-export interface CourseItem {
-  id: string;
-  title: string;
-  slug: string;
-  subtitle: string;
-  description: string;
-  coverImage: string;
-  trailerVideoUrl: string;
-  price: number;
-  salePrice?: number;
-  level: "ม.ต้น (ม.1-3)" | "ม.ปลาย (ม.4-6)" | "เตรียมสอบเข้า (TCAS/A-Level)" | "ทุกระดับ";
-  category: string;
-  categorySlug: string;
-  instructor: Tutor;
-  totalDurationHours: number;
-  totalLessons: number;
-  rating: number;
-  reviewCount: number;
-  studentCount: number;
-  isFeatured?: boolean;
-  whatYouWillLearn: string[];
-  requirements: string[];
-  chapters: ChapterItem[];
+  fileSize: string;
+  fileType: string;
+  downloadUrl: string;
 }
 
 export interface StudentReview {
@@ -73,25 +74,27 @@ export interface StudentReview {
   avatar: string;
 }
 
-// ข้อมูลติวเตอร์คนเดียว (Single Tutor Profile)
-export const MAIN_TUTOR: Tutor = {
-  id: "tutor-main",
-  name: "พี่แม็ก จุฬาฯ (P'Max)",
+// -------------------------------------------------------------
+// MAIN TUTOR: พี่โต๋ (P'Toh Tutor) - ไม่ระบุมหาวิทยาลัย
+// -------------------------------------------------------------
+export const MAIN_TUTOR: TutorProfile = {
+  id: "tutor-ptoh",
+  name: "พี่โต๋ (P'Toh)",
   avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=600",
-  headline: "เกียรตินิยมอันดับ 1 วิศวะ จุฬาฯ • ผู้เชี่ยวชาญคณิตศาสตร์ & ฟิสิกส์ ม.ปลาย",
-  bio: "ประสบการณ์สอนกวดวิชากว่า 10 ปี เน้นสอนจากความเข้าใจใน Concept ลึกซึ้ง ลุยโจทย์ข้อสอบแข่งขันและ A-Level จริงย้อนหลังกว่า 15 ปี ไม่เน้นการท่องจำสูตรแบบนกแก้วนกขุนทอง ส่งนักเรียนสอบติดคณะแพทย์ วิศวะ บัญชี จุฬาฯ-ศิริราช-รามาฯ มาแล้วกว่าพันคน",
+  headline: "เกียรตินิยมอันดับ 1 • ผู้เชี่ยวชาญคณิตศาสตร์ & ฟิสิกส์ ม.ปลาย ประสบการณ์สอน 10+ ปี",
+  bio: "ประสบการณ์สอนกวดวิชากว่า 10 ปี เน้นสอนจากความเข้าใจใน Concept ลึกซึ้ง ลุยโจทย์ข้อสอบแข่งขันและ A-Level จริงย้อนหลังกว่า 15 ปี ไม่เน้นการท่องจำสูตรแบบนกแก้วนกขุนทอง ส่งนักเรียนสอบติดคณะแพทย์ วิศวะ บัญชี และมหาวิทยาลัยชั้นนำมาแล้วกว่าพันคน",
   rating: 4.98,
   totalStudents: 15400,
   totalCourses: 8,
   isVerified: true,
   subjects: ["คณิตศาสตร์ ม.ปลาย", "A-Level Math 1", "ฟิสิกส์ ม.ปลาย", "TPAT3 ความถนัดวิศวะ"],
   education: [
-    "ปริญญาตรี เกียรตินิยมอันดับ 1 คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย",
-    "เหรียญเงิน โอลิมปิกวิชาการคณิตศาสตร์ (สอวน. & สสวท.)",
+    "ปริญญาตรี เกียรตินิยมอันดับ 1 ด้านวิทยาศาสตร์และเทคโนโลยี",
+    "เหรียญรางวัล โอลิมปิกวิชาการคณิตศาสตร์ (สอวน. & สสวท.)",
     "คะแนนสอบเข้ามหาวิทยาลัย คณิตศาสตร์ 100 เต็ม และ ฟิสิกส์ 96 เต็ม",
   ],
   achievements: [
-    "ติวเตอร์ยอดนิยมอันดับ 1 ด้านคณิตศาสตร์ & ฟิสิกส์",
+    "ติวเตอร์ยอดนิยมด้านคณิตศาสตร์ & ฟิสิกส์ ม.ปลาย",
     "ผู้เขียนหนังสือสรุปสูตรคณิตศาสตร์ ม.ปลาย Best Seller",
     "ดูแลและตอบคำถามนักเรียนด้วยตัวเองทุกคน 100%",
   ],
@@ -111,16 +114,16 @@ export const STUDENT_REVIEWS: StudentReview[] = [
     id: "rev-1",
     studentName: "น้องแพรวา",
     school: "โรงเรียนเตรียมอุดมศึกษา",
-    faculty: "สอบติด แพทยศาสตร์ จุฬาฯ",
+    faculty: "สอบติด คณะแพทยศาสตร์",
     score: "A-Level คณิต 1 ได้ 94 คะแนน",
-    comment: "พี่แม็กสอนแคลคูลัสและตรีโกณฯ ได้เห็นภาพมาก จากที่เคยเกลียดคณิต พอเข้าใจที่มาของสูตรก็ทำโจทย์ประยุกต์ได้หมดเลยค่ะ ขอบคุณพี่แม็กมากๆ ค่ะ",
+    comment: "พี่โต๋สอนแคลคูลัสและตรีโกณฯ ได้เห็นภาพมาก จากที่เคยเกลียดคณิต พอเข้าใจที่มาของสูตรก็ทำโจทย์ประยุกต์ได้หมดเลยค่ะ ขอบคุณพี่โต๋มากๆ ค่ะ",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",
   },
   {
     id: "rev-2",
     studentName: "น้องภูริ",
     school: "โรงเรียนสวนกุหลาบวิทยาลัย",
-    faculty: "สอบติด วิศวกรรมศาสตร์ จุฬาฯ",
+    faculty: "สอบติด คณะวิศวกรรมศาสตร์",
     score: "A-Level ฟิสิกส์ 92 / คณิต 88",
     comment: "คอร์สตะลุยโจทย์ช่วยดักทางข้อสอบได้เป๊ะมากครับ เทคนิคโลปิตาลกับการวิเคราะห์แรงในฟิสิกส์ช่วยประหยัดเวลาทำข้อสอบไปได้เยอะมาก",
     avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=200",
@@ -129,9 +132,9 @@ export const STUDENT_REVIEWS: StudentReview[] = [
     id: "rev-3",
     studentName: "น้องมิ้นต์",
     school: "โรงเรียนสาธิต มศว ปทุมวัน",
-    faculty: "สอบติด บัญชี-บริหาร จุฬาฯ",
+    faculty: "สอบติด คณะพาณิชยศาสตร์และการบัญชี",
     score: "A-Level คณิต 1 ได้ 86 คะแนน",
-    comment: "ชอบที่มีระบบถาม-ตอบใต้คลิปมากค่ะ เวลาทำการบ้านแล้วติดตรงไหน พี่แม็กเข้ามาพิมพ์อธิบายเองตลอด อบอุ่นเหมือนมีติวเตอร์ส่วนตัวเลย",
+    comment: "ชอบที่มีระบบถาม-ตอบใต้คลิปมากค่ะ เวลาทำการบ้านแล้วติดตรงไหน พี่โต๋เข้ามาพิมพ์อธิบายเองตลอด อบอุ่นเหมือนมีติวเตอร์ส่วนตัวเลย",
     avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=200",
   },
 ];

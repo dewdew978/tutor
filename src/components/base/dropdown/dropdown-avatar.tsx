@@ -41,7 +41,7 @@ export const DropdownAvatar = () => {
                         <Dropdown.Popover placement="right top" offset={-6}>
                             <Dropdown.Menu>
                                 <Dropdown.Item>คู่มือการเรียน</Dropdown.Item>
-                                <Dropdown.Item>ติดต่อพี่แม็ก (LINE)</Dropdown.Item>
+                                <Dropdown.Item>ติดต่อพี่โต๋ (LINE)</Dropdown.Item>
                                 <Dropdown.Item>ส่งข้อเสนอแนะ</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown.Popover>

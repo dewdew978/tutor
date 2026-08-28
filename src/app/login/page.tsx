@@ -89,7 +89,7 @@ export default function LoginPage() {
                 <GraduationCap className="h-5 w-5" />
               </div>
               <span className="text-lg font-extrabold text-[#101828] tracking-tight">
-                P&apos;Max Academy
+                P&apos;Toh Tutor
               </span>
             </Link>
 
@@ -258,7 +258,7 @@ export default function LoginPage() {
 
         {/* Bottom copyright */}
         <div className="pt-8 text-center text-[11px] text-[#98A2B3]">
-          © {new Date().getFullYear()} P&apos;Max Academy. สงวนลิขสิทธิ์ทุกประการ
+          © {new Date().getFullYear()} P&apos;Toh Tutor. สงวนลิขสิทธิ์ทุกประการ
         </div>
       </div>
 
@@ -274,7 +274,7 @@ export default function LoginPage() {
             <Sparkles className="h-3.5 w-3.5 text-[#FDB022]" />
             สถาบันกวดวิชาคณิตศาสตร์ & ฟิสิกส์ ม.ปลาย
           </span>
-          <span className="text-xs text-[#98A2B3]">P&apos;Max Online LMS</span>
+          <span className="text-xs text-[#98A2B3]">P&apos;Toh Online LMS</span>
         </div>
 
         {/* Middle Testimonial Box */}
@@ -286,7 +286,7 @@ export default function LoginPage() {
           </div>
 
           <blockquote className="text-xl font-medium text-white leading-relaxed">
-            &ldquo;คณิต 1 A-Level ได้ 92/100 เพราะเรียนกับพี่แม็กเลยครับ เทคนิคลัดและโจทย์ดักจุดพลาดช่วยประหยัดเวลาทำข้อสอบได้เยอะมากจริงๆ ครับ&rdquo;
+            &ldquo;คณิต 1 A-Level ได้ 92/100 เพราะเรียนกับพี่โต๋เลยครับ เทคนิคลัดและโจทย์ดักจุดพลาดช่วยประหยัดเวลาทำข้อสอบได้เยอะมากจริงๆ ครับ&rdquo;
           </blockquote>
 
           <div className="flex items-center gap-3 pt-2">
@@ -300,7 +300,7 @@ export default function LoginPage() {
                 <span>น้องกานต์ — ศิษย์เก่าเตรียมอุดมฯ</span>
                 <CheckCircle2 className="h-4 w-4 text-[#12B76A]" />
               </div>
-              <p className="text-xs text-[#D0D5DD]">ปัจจุบัน: นิสิตแพทย์ จุฬาฯ (ปี 2)</p>
+              <p className="text-xs text-[#D0D5DD]">ปัจจุบัน: สอบติดคณะแพทยศาสตร์</p>
             </div>
           </div>
         </div>
@@ -313,7 +313,7 @@ export default function LoginPage() {
           </div>
           <div>
             <p className="text-xl font-extrabold text-[#75E0A7]">100%</p>
-            <span className="text-[11px] text-[#98A2B3]">พี่แม็กตอบเอง</span>
+            <span className="text-[11px] text-[#98A2B3]">พี่โต๋ตอบเอง</span>
           </div>
           <div>
             <p className="text-xl font-extrabold text-[#E9D7FE]">ตลอดชีพ</p>

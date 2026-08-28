@@ -54,7 +54,7 @@ export default function PrivacyPolicyPage() {
             {/* Introduction */}
             <div className="space-y-3">
               <p>
-                <strong>P&apos;Max Academy</strong> (&ldquo;สถาบัน&rdquo; หรือ &ldquo;เรา&rdquo;) ให้ความสำคัญสูงสุดต่อการคุ้มครองข้อมูลส่วนบุคคลของนักเรียน ผู้ปกครอง และผู้เข้าใช้งานเว็บไซต์ทุกท่าน นโยบายความเป็นส่วนตัวฉบับนี้จัดทำขึ้นเพื่อชี้แจงรายละเอียดเกี่ยวกับการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคล ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
+                <strong>P&apos;Toh Tutor</strong> (&ldquo;สถาบัน&rdquo; หรือ &ldquo;เรา&rdquo;) ให้ความสำคัญสูงสุดต่อการคุ้มครองข้อมูลส่วนบุคคลของนักเรียน ผู้ปกครอง และผู้เข้าใช้งานเว็บไซต์ทุกท่าน นโยบายความเป็นส่วนตัวฉบับนี้จัดทำขึ้นเพื่อชี้แจงรายละเอียดเกี่ยวกับการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคล ตามพระราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562 (PDPA)
               </p>
             </div>
 
@@ -90,7 +90,7 @@ export default function PrivacyPolicyPage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-[#7F56D9] shrink-0 mt-0.5" />
-                  <span>เพื่อการสื่อสาร ตอบคำถามข้อสงสัยในบทเรียน และให้คำปรึกษาทางวิชาการโดยพี่แม็ก</span>
+                  <span>เพื่อการสื่อสาร ตอบคำถามข้อสงสัยในบทเรียน และให้คำปรึกษาทางวิชาการโดยพี่โต๋</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-[#7F56D9] shrink-0 mt-0.5" />
@@ -116,7 +116,7 @@ export default function PrivacyPolicyPage() {
               </p>
               <div className="rounded-xl border border-[#EAECF0] bg-[#F9FAFB] p-4 space-y-2 text-xs">
                 <p>🔒 <strong>การเข้ารหัสข้อมูล:</strong> ข้อมูลทั้งหมดถูกส่งผ่านโปรโตคอล HTTPS ด้วยการเข้ารหัส SSL/TLS ระดับ 256-bit</p>
-                <p>🛡️ <strong>การจำกัดการเข้าถึง:</strong> มีเพียงพี่แม็กและทีมงานที่ได้รับมอบหมายเท่านั้นที่สามารถเข้าถึงข้อมูลเพื่อการบริการ</p>
+                <p>🛡️ <strong>การจำกัดการเข้าถึง:</strong> มีเพียงพี่โต๋และทีมงานที่ได้รับมอบหมายเท่านั้นที่สามารถเข้าถึงข้อมูลเพื่อการบริการ</p>
                 <p>👁️ <strong>ระบบลายน้ำเฉพาะบุคคล:</strong> ระบบวิดีโอแสดงรหัสนักเรียนโปร่งแสงบนหน้าจอ เพื่อปกป้องบัญชีจากการถูกนำไปใช้งานซ้ำซ้อน</p>
               </div>
             </div>
@@ -158,14 +158,14 @@ export default function PrivacyPolicyPage() {
                 หากคุณมีข้อสงสัยเกี่ยวกับนโยบายความเป็นส่วนตัว หรือต้องการใช้สิทธิตามกฎหมาย PDPA สามารถติดต่อเราได้ที่:
               </p>
               <div className="rounded-xl border border-[#E9D7FE] bg-[#F9F5FF] p-5 space-y-2 text-xs">
-                <p className="font-bold text-[#7F56D9] text-sm">สถาบันกวดวิชา P&apos;Max Academy</p>
+                <p className="font-bold text-[#7F56D9] text-sm">สถาบันกวดวิชา P&apos;Toh Tutor</p>
                 <p className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-[#7F56D9]" />
-                  <span>อีเมล: support@pmax-academy.com</span>
+                  <span>อีเมล: support@ptoh-tutor.com</span>
                 </p>
                 <p className="flex items-center gap-2">
                   <MessageCircle className="h-4 w-4 text-[#12B76A]" />
-                  <span>LINE Official: @pmaxacademy</span>
+                  <span>LINE Official: @ptohtutor</span>
                 </p>
               </div>
             </div>

@@ -13,7 +13,7 @@ export function Footer() {
                 รับสรุปสูตรฟรี & แนวข้อสอบ A-Level ส่งตรงถึงอีเมล
               </h3>
               <p className="text-sm text-[#475467] mt-1">
-                รับเทคนิคการทำโจทย์และสิทธิพิเศษสำหรับนักเรียนของพี่แม็ก
+                รับเทคนิคการทำโจทย์และสิทธิพิเศษสำหรับนักเรียนของพี่โต๋
               </p>
             </div>
 
@@ -44,11 +44,11 @@ export function Footer() {
                 <GraduationCap className="h-4 w-4" />
               </div>
               <span className="text-lg font-bold text-[#101828]">
-                P&apos;Max Academy
+                P&apos;Toh Tutor
               </span>
             </Link>
             <p className="text-sm text-[#475467] max-w-md leading-relaxed">
-              สถาบันกวดวิชาคณิตศาสตร์และฟิสิกส์ ม.ปลาย สู่การสอบเข้ามหาวิทยาลัยชั้นนำ สอนโดย พี่แม็ก เกียรตินิยมอันดับ 1 วิศวะ จุฬาฯ
+              สถาบันกวดวิชาคณิตศาสตร์และฟิสิกส์ ม.ปลาย สู่การสอบเข้ามหาวิทยาลัยชั้นนำ สอนโดย พี่โต๋ เกียรตินิยมอันดับ 1
             </p>
             <div className="flex items-center gap-4 pt-2 text-[#667085]">
               <a href="https://line.me" target="_blank" rel="noreferrer" className="flex items-center gap-1 hover:text-[#12B76A] transition-colors text-xs font-semibold" title="LINE">
@@ -69,11 +69,11 @@ export function Footer() {
               คอร์สเรียนตามระดับชั้น
             </h4>
             <ul className="space-y-3 text-sm font-medium text-[#475467]">
-              <li><Link href="/#courses-catalog" className="hover:text-[#7F56D9]">คณิตศาสตร์ ม.4</Link></li>
-              <li><Link href="/#courses-catalog" className="hover:text-[#7F56D9]">คณิตศาสตร์ ม.5</Link></li>
-              <li><Link href="/#courses-catalog" className="hover:text-[#7F56D9]">คณิตศาสตร์ ม.6</Link></li>
-              <li><Link href="/#courses-catalog" className="hover:text-[#7F56D9]">ตะลุยโจทย์ A-Level คณิต 1</Link></li>
-              <li><Link href="/#courses-catalog" className="hover:text-[#7F56D9]">ฟิสิกส์ ม.ปลาย & TPAT3</Link></li>
+              <li><Link href="/courses" className="hover:text-[#7F56D9]">คณิตศาสตร์ ม.4</Link></li>
+              <li><Link href="/courses" className="hover:text-[#7F56D9]">คณิตศาสตร์ ม.5</Link></li>
+              <li><Link href="/courses" className="hover:text-[#7F56D9]">คณิตศาสตร์ ม.6</Link></li>
+              <li><Link href="/courses" className="hover:text-[#7F56D9]">ตะลุยโจทย์ A-Level คณิต 1</Link></li>
+              <li><Link href="/courses" className="hover:text-[#7F56D9]">ฟิสิกส์ ม.ปลาย & TPAT3</Link></li>
             </ul>
           </div>
 
@@ -83,7 +83,7 @@ export function Footer() {
               เมนู & การช่วยเหลือ
             </h4>
             <ul className="space-y-3 text-sm font-medium text-[#475467]">
-              <li><Link href="/#about-tutor" className="hover:text-[#7F56D9]">ประวัติและผลงานพี่แม็ก</Link></li>
+              <li><Link href="/#about-tutor" className="hover:text-[#7F56D9]">ประวัติและผลงานพี่โต๋</Link></li>
               <li><Link href="/#testimonials" className="hover:text-[#7F56D9]">รีวิวจากรุ่นพี่สอบติด</Link></li>
               <li><Link href="/learn/math-calculus-mastery" className="hover:text-[#7F56D9]">ทดลองเรียนฟรี</Link></li>
               <li><Link href="/instructor" className="hover:text-[#7F56D9]">ระบบจัดการคอร์สหลังบ้าน</Link></li>
@@ -93,7 +93,7 @@ export function Footer() {
 
         {/* Bottom Sub-Bar */}
         <div className="mt-12 border-t border-[#EAECF0] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#667085] gap-4">
-          <p>© {new Date().getFullYear()} P&apos;Max Academy. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} P&apos;Toh Tutor. All rights reserved.</p>
           <div className="flex items-center gap-6">
             <Link href="/privacy" className="hover:text-[#7F56D9] transition-colors">นโยบายความเป็นส่วนตัว</Link>
             <Link href="/terms" className="hover:text-[#7F56D9] transition-colors">เงื่อนไขการใช้บริการ</Link>

@@ -42,7 +42,7 @@ export function Header() {
             </div>
             <div>
               <span className="text-lg font-extrabold text-[#101828] tracking-tight">
-                P&apos;Max Academy
+                P&apos;Toh Tutor
               </span>
               <span className="hidden sm:inline-block text-[10px] uppercase font-semibold text-[#7F56D9] ml-1.5 px-1.5 py-0.5 rounded bg-[#F9F5FF] border border-[#E9D7FE]">
                 Math & Physics
@@ -56,7 +56,7 @@ export function Header() {
               คอร์สเรียนทั้งหมด
             </Link>
             <Link href="/#about-tutor" className="hover:text-[#7F56D9] transition-colors">
-              เกี่ยวกับพี่แม็ก
+              เกี่ยวกับพี่โต๋
             </Link>
             <Link href="/#testimonials" className="hover:text-[#7F56D9] transition-colors">
               รีวิวผลงานนักเรียน
@@ -93,7 +93,7 @@ export function Header() {
             className="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-[#027A48] bg-[#ECFDF3] border border-[#ABEFC6] px-3 py-2 rounded-lg hover:bg-[#D1FADF] transition-colors"
           >
             <MessageCircle className="h-4 w-4" />
-            ปรึกษาพี่แม็ก (LINE)
+            ปรึกษาพี่โต๋ (LINE)
           </a>
 
           {/* Untitled UI Dropdown Menu */}
@@ -102,7 +102,7 @@ export function Header() {
               trigger={
                 <button className="inline-flex items-center gap-2 rounded-lg border border-[#D0D5DD] bg-white px-3 py-2 text-xs font-semibold text-[#344054] shadow-unt-xs hover:bg-[#F9FAFB] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all cursor-pointer">
                   <div className="h-5 w-5 rounded-full bg-[#F4EBFF] text-[#7F56D9] flex items-center justify-center font-bold text-[10px]">
-                    น
+                    ต
                   </div>
                   <span>บัญชีของฉัน</span>
                   <ChevronDown className="h-3.5 w-3.5 text-[#667085]" />
@@ -144,7 +144,7 @@ export function Header() {
             onClick={() => setMobileMenuOpen(false)}
             className="block py-2 text-sm font-semibold text-[#344054] hover:text-[#7F56D9]"
           >
-            เกี่ยวกับพี่แม็ก (ประวัติ & ผลงาน)
+            เกี่ยวกับพี่โต๋ (ประวัติ & ผลงาน)
           </Link>
           <Link
             href="/#testimonials"

@@ -1,8 +1,8 @@
 import { CheckCircle, Star, Users, BookOpen } from "lucide-react";
-import { Tutor } from "@/lib/mock-data";
+import { TutorProfile } from "@/lib/mock-data";
 
 interface TutorCardProps {
-  tutor: Tutor;
+  tutor: TutorProfile;
 }
 
 export function TutorCard({ tutor }: TutorCardProps) {
@@ -37,7 +37,7 @@ export function TutorCard({ tutor }: TutorCardProps) {
 
       {/* Subjects Tags */}
       <div className="mt-4 flex flex-wrap justify-center gap-1.5">
-        {tutor.subjects.map((sub, idx) => (
+        {tutor.subjects.map((sub: string, idx: number) => (
           <span
             key={idx}
             className="rounded-md bg-[#F9FAFB] px-2 py-0.5 text-[11px] font-medium text-[#344054] border border-[#EAECF0]"
