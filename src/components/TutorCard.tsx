@@ -1,5 +1,5 @@
 import { CheckCircle, Star, Users, BookOpen } from "lucide-react";
-import { TutorProfile } from "@/lib/mock-data";
+import { TutorProfile } from "@/lib/types";
 
 interface TutorCardProps {
   tutor: TutorProfile;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Star, Clock, BookOpen, CheckCircle, ArrowRight, Play } from "lucide-react";
-import { CourseItem } from "@/lib/mock-data";
+import { CourseItem } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
 
 interface CourseCardProps {

@@ -16,7 +16,7 @@ import {
   ArrowLeft,
   AlertCircle
 } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { supabase, checkIsAdmin } from "@/lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -51,10 +51,20 @@ export default function LoginPage() {
         return;
       }
 
-      setSuccessMessage("เข้าสู่ระบบสำเร็จ กำลังพาเข้าสู่ห้องเรียน...");
-      setTimeout(() => {
-        router.push("/courses");
-      }, 500);
+      const redirectParam = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("redirect") : null;
+      const isAdminUser = checkIsAdmin(data.user);
+
+      if (isAdminUser) {
+        setSuccessMessage("เข้าสู่ระบบในฐานะผู้ดูแลระบบ (Admin) สำเร็จ! กำลังเปิดแดชบอร์ด...");
+        setTimeout(() => {
+          router.push(redirectParam || "/instructor");
+        }, 500);
+      } else {
+        setSuccessMessage("เข้าสู่ระบบสำเร็จ กำลังพาเข้าสู่ห้องเรียน...");
+        setTimeout(() => {
+          router.push(redirectParam || "/courses");
+        }, 500);
+      }
     } catch (err: any) {
       setErrorMessage(err.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
       setIsLoading(false);

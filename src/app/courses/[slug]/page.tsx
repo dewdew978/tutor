@@ -1,7 +1,8 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Star, 
   Clock, 
@@ -26,19 +27,110 @@ import {
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { FAQSection } from "@/components/FAQSection";
-import { MOCK_COURSES, STUDENT_REVIEWS } from "@/lib/mock-data";
+import { getCourseBySlug, getStudentReviews, enrollStudentInCourse } from "@/lib/data-service";
+import { CourseItem, StudentReview } from "@/lib/types";
 import { formatPrice } from "@/lib/utils";
+import { supabase } from "@/lib/supabase";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export default function CourseDetailPage({ params }: PageProps) {
+  const router = useRouter();
   const resolvedParams = use(params);
-  const course = MOCK_COURSES.find((c) => c.slug === resolvedParams.slug) || MOCK_COURSES[0];
-  const [openChapterId, setOpenChapterId] = useState<string>(course.chapters[0]?.id || "");
+  const [course, setCourse] = useState<CourseItem | null>(null);
+  const [reviews, setReviews] = useState<StudentReview[]>([]);
+  const [openChapterId, setOpenChapterId] = useState<string>("");
   const [previewVideoUrl, setPreviewVideoUrl] = useState<string | null>(null);
   const [enrollModalOpen, setEnrollModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  const [isEnrolling, setIsEnrolling] = useState(false);
+
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setCurrentUser(user);
+    });
+  }, []);
+
+  const handleEnrollClick = () => {
+    if (!currentUser) {
+      router.push(`/login?redirect=/courses/${resolvedParams.slug}`);
+      return;
+    }
+    setEnrollModalOpen(true);
+  };
+
+  const handleConfirmEnrollment = async () => {
+    if (!currentUser) {
+      router.push(`/login?redirect=/courses/${resolvedParams.slug}`);
+      return;
+    }
+    if (!course) return;
+
+    setIsEnrolling(true);
+    try {
+      await enrollStudentInCourse(
+        currentUser.id,
+        currentUser.email || "",
+        currentUser.user_metadata?.full_name || "",
+        course.id,
+        course.slug,
+        Number(course.salePrice || course.price || 0)
+      );
+    } catch (e) {
+      console.error("Error creating enrollment:", e);
+    }
+    setIsEnrolling(false);
+    setEnrollModalOpen(false);
+    router.push(`/learn/${course.slug}`);
+  };
+
+  useEffect(() => {
+    getCourseBySlug(resolvedParams.slug).then((c) => {
+      setCourse(c);
+      if (c?.chapters && c.chapters.length > 0) {
+        setOpenChapterId(c.chapters[0].id);
+      }
+      setIsLoading(false);
+    });
+    getStudentReviews().then(setReviews);
+  }, [resolvedParams.slug]);
+
+  if (isLoading && !course) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white text-[#101828]">
+        <Header />
+        <main className="flex-1 flex items-center justify-center py-20">
+          <div className="text-center space-y-3">
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-[#7F56D9] border-t-transparent mx-auto" />
+            <p className="text-xs text-[#667085]">กำลังโหลดข้อมูลคอร์สเรียน...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (!course) {
+    return (
+      <div className="min-h-screen flex flex-col bg-white text-[#101828]">
+        <Header />
+        <main className="flex-1 flex items-center justify-center py-20">
+          <div className="text-center space-y-3">
+            <BookOpen className="h-10 w-10 text-[#98A2B3] mx-auto" />
+            <h2 className="text-lg font-bold text-[#101828]">ไม่พบคอร์สเรียนนี้ในระบบ</h2>
+            <Link href="/courses" className="inline-block text-xs font-bold text-[#7F56D9] underline">
+              กลับไปดูคอร์สทั้งหมด
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const toggleChapter = (id: string) => {
     setOpenChapterId((prev) => (prev === id ? "" : id));
@@ -186,12 +278,23 @@ export default function CourseDetailPage({ params }: PageProps) {
 
                   {/* Enrollment Buttons */}
                   <div className="space-y-2.5">
-                    <button
-                      onClick={() => setEnrollModalOpen(true)}
-                      className="w-full text-center rounded-lg bg-[#7F56D9] py-3.5 text-sm font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all"
-                    >
-                      สมัครเรียนคอร์สนี้ (เข้าเรียนทันที)
-                    </button>
+                    {course.status === "CLOSED" || course.status === "ARCHIVED" ? (
+                      <div className="rounded-xl bg-[#FEF3F2] border border-[#FECDCA] p-3 text-center space-y-1">
+                        <span className="font-bold text-[#B42318] text-xs block">
+                          🔒 คอร์สนี้ปิดรับสมัครแล้ว (Closed)
+                        </span>
+                        <p className="text-[11px] text-[#7A271A]">
+                          ขณะนี้คอร์สนี้ปิดรับสมัครนักเรียนใหม่แล้ว นักเรียนเดิมสามารถเข้าเรียนต่อได้ตามปกติ
+                        </p>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={handleEnrollClick}
+                        className="w-full text-center rounded-lg bg-[#7F56D9] py-3.5 text-sm font-bold text-white shadow-unt-xs hover:bg-[#6941C6] focus:outline-none focus:ring-4 focus:ring-[#F4EBFF] transition-all"
+                      >
+                        สมัครเรียนคอร์สนี้ (เข้าเรียนทันที)
+                      </button>
+                    )}
 
                     <button
                       onClick={() => setPreviewVideoUrl(course.chapters[0]?.lessons[0]?.videoUrl || course.trailerVideoUrl)}
@@ -472,12 +575,13 @@ export default function CourseDetailPage({ params }: PageProps) {
                 >
                   ยกเลิก
                 </button>
-                <Link
-                  href={`/learn/${course.slug}`}
-                  className="flex-1 rounded-lg bg-[#7F56D9] py-2.5 text-xs font-bold text-white text-center hover:bg-[#6941C6] shadow-unt-xs"
+                <button
+                  onClick={handleConfirmEnrollment}
+                  disabled={isEnrolling}
+                  className="flex-1 rounded-lg bg-[#7F56D9] py-2.5 text-xs font-bold text-white text-center hover:bg-[#6941C6] shadow-unt-xs disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  ยืนยันเข้าห้องเรียน →
-                </Link>
+                  {isEnrolling ? "กำลังเปิดห้องเรียน..." : "ยืนยันเข้าห้องเรียน →"}
+                </button>
               </div>
             </div>
           </div>
@@ -506,7 +610,7 @@ export default function CourseDetailPage({ params }: PageProps) {
               ทดลองเรียน
             </Link>
             <button
-              onClick={() => setEnrollModalOpen(true)}
+              onClick={handleEnrollClick}
               className="rounded-lg bg-[#7F56D9] px-4 py-2 text-xs font-bold text-white shadow-unt-xs hover:bg-[#6941C6]"
             >
               สมัครเรียนทันที

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, ReactNode } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   ChevronDown, 
   User, 
@@ -10,8 +11,11 @@ import {
   BookOpen, 
   HelpCircle, 
   Sparkles,
-  Check
+  ShieldCheck,
+  ShieldAlert,
+  LogIn
 } from "lucide-react";
+import { supabase, checkIsAdmin } from "@/lib/supabase";
 
 export interface DropdownMenuItem {
   id: string;
@@ -32,60 +36,122 @@ interface DropdownMenuSimpleProps {
   items?: DropdownMenuItem[];
   align?: "left" | "right";
   className?: string;
+  user?: any;
+  isAdmin?: boolean;
 }
-
-export const DEFAULT_DROPDOWN_ITEMS: DropdownMenuItem[] = [
-  {
-    id: "courses",
-    label: "คอร์สเรียนของฉัน",
-    href: "/learn/math-calculus-mastery",
-    icon: <BookOpen className="h-4 w-4 text-[#667085]" />,
-    badge: "เรียนต่อ",
-  },
-  {
-    id: "login",
-    label: "เข้าสู่ระบบ (Log in)",
-    href: "/login",
-    icon: <User className="h-4 w-4 text-[#667085]" />,
-  },
-  {
-    id: "signup",
-    label: "สมัครสมาชิกใหม่",
-    href: "/signup",
-    icon: <Sparkles className="h-4 w-4 text-[#7F56D9]" />,
-    badge: "ฟรี",
-  },
-  {
-    id: "faqs",
-    label: "คำถามที่พบบ่อย (FAQs)",
-    href: "/#faqs",
-    icon: <HelpCircle className="h-4 w-4 text-[#667085]" />,
-  },
-  {
-    id: "settings",
-    label: "ระบบจัดการหลังบ้าน",
-    href: "/instructor",
-    icon: <Settings className="h-4 w-4 text-[#667085]" />,
-  },
-  {
-    id: "logout",
-    label: "ออกจากระบบ",
-    href: "/login",
-    icon: <LogOut className="h-4 w-4 text-[#F04438]" />,
-    destructive: true,
-    dividerAbove: true,
-  },
-];
 
 export function DropdownMenuSimple({
   trigger,
   label = "เมนูผู้ใช้งาน",
-  items = DEFAULT_DROPDOWN_ITEMS,
+  items,
   align = "right",
   className = "",
+  user: propUser,
+  isAdmin: propIsAdmin,
 }: DropdownMenuSimpleProps) {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const [authUser, setAuthUser] = useState<any>(propUser ?? null);
+  const [isAdmin, setIsAdmin] = useState<boolean>(propIsAdmin ?? false);
+
+  useEffect(() => {
+    if (propUser !== undefined) {
+      setAuthUser(propUser);
+      setIsAdmin(propIsAdmin ?? checkIsAdmin(propUser));
+      return;
+    }
+
+    let isMounted = true;
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!isMounted) return;
+      setAuthUser(user);
+      setIsAdmin(checkIsAdmin(user));
+    });
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!isMounted) return;
+      const user = session?.user ?? null;
+      setAuthUser(user);
+      setIsAdmin(checkIsAdmin(user));
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, [propUser, propIsAdmin]);
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    setAuthUser(null);
+    setIsAdmin(false);
+    setIsOpen(false);
+    router.push("/login");
+  };
+
+  // Compute dynamic items if not explicitly provided
+  const computedItems: DropdownMenuItem[] = items ?? (authUser ? [
+    {
+      id: "courses",
+      label: "คอร์สเรียนของฉัน",
+      href: "/my-courses",
+      icon: <BookOpen className="h-4 w-4 text-[#7F56D9]" />,
+      badge: "เข้าเรียน",
+    },
+    ...(isAdmin ? [
+      {
+        id: "backoffice",
+        label: "ระบบจัดการหลังบ้าน (Admin)",
+        href: "/instructor",
+        icon: <ShieldCheck className="h-4 w-4 text-[#7F56D9]" />,
+        badge: "Admin",
+      }
+    ] : []),
+    {
+      id: "faqs",
+      label: "คำถามที่พบบ่อย (FAQs)",
+      href: "/#faqs",
+      icon: <HelpCircle className="h-4 w-4 text-[#667085]" />,
+    },
+    {
+      id: "logout",
+      label: "ออกจากระบบ",
+      onClick: handleSignOut,
+      icon: <LogOut className="h-4 w-4 text-[#F04438]" />,
+      destructive: true,
+      dividerAbove: true,
+    }
+  ] : [
+    {
+      id: "login",
+      label: "เข้าสู่ระบบ (Log in)",
+      href: "/login",
+      icon: <LogIn className="h-4 w-4 text-[#7F56D9]" />,
+    },
+    {
+      id: "signup",
+      label: "สมัครสมาชิกใหม่",
+      href: "/signup",
+      icon: <Sparkles className="h-4 w-4 text-[#7F56D9]" />,
+      badge: "ฟรี",
+    },
+    {
+      id: "courses",
+      label: "ดูคอร์สเรียนทั้งหมด",
+      href: "/courses",
+      icon: <BookOpen className="h-4 w-4 text-[#667085]" />,
+    },
+    {
+      id: "faqs",
+      label: "คำถามที่พบบ่อย (FAQs)",
+      href: "/#faqs",
+      icon: <HelpCircle className="h-4 w-4 text-[#667085]" />,
+      dividerAbove: true,
+    },
+  ]);
+
 
   // Close when clicking outside
   useEffect(() => {
@@ -140,7 +206,30 @@ export function DropdownMenuSimple({
           }`}
           role="menu"
         >
-          {items.map((item) => (
+          {/* Logged-in User Profile Header */}
+          {authUser && (
+            <div className="p-2.5 mb-1 bg-[#F9FAFB] rounded-lg border border-[#EAECF0] space-y-1">
+              <div className="flex items-center justify-between">
+                <p className="text-xs font-bold text-[#101828] truncate">
+                  {authUser.user_metadata?.full_name || authUser.email?.split("@")[0]}
+                </p>
+                {isAdmin ? (
+                  <span className="rounded-full bg-[#7F56D9] px-2 py-0.5 text-[9px] font-bold text-white shadow-unt-xs">
+                    Admin
+                  </span>
+                ) : (
+                  <span className="rounded-full bg-[#ECFDF3] px-2 py-0.5 text-[9px] font-bold text-[#027A48] border border-[#ABEFC6]">
+                    Student
+                  </span>
+                )}
+              </div>
+              <p className="text-[11px] text-[#667085] truncate font-mono">
+                {authUser.email}
+              </p>
+            </div>
+          )}
+
+          {computedItems.map((item) => (
             <div key={item.id}>
               {item.dividerAbove && (
                 <div className="my-1 border-t border-[#EAECF0]" role="separator" />

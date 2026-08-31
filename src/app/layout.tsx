@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "เรียนรู้อย่างไร้ขีดจำกัดกับติวเตอร์มืออาชีพ คอร์สเรียนวิดีโอคุณภาพสูง พร้อมเอกสารสรุปและระบบถาม-ตอบ",
 };
 
+import { CookieBanner } from "@/components/CookieBanner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,7 +31,18 @@ export default function RootLayout({
       lang="th"
       className={`${prompt.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans">{children}</body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-full flex flex-col font-sans">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }

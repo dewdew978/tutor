@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { 
   Search, 
@@ -22,16 +22,45 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { CourseCard } from "@/components/CourseCard";
 import { FAQSection } from "@/components/FAQSection";
-import { CATEGORIES, MOCK_COURSES, MAIN_TUTOR } from "@/lib/mock-data";
+import { getPublishedCourses, getCategories } from "@/lib/data-service";
+import { CourseItem, CategoryItem } from "@/lib/types";
 
 export default function CoursesPage() {
+  const [courses, setCourses] = useState<CourseItem[]>([]);
+  const [categories, setCategories] = useState<CategoryItem[]>([
+    { id: "all", name: "คอร์สทั้งหมด", slug: "all" },
+  ]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortBy, setSortBy] = useState<"popular" | "rating" | "price-asc" | "price-desc">("popular");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([getPublishedCourses(), getCategories()]).then(([cData, catData]) => {
+      setCourses(cData);
+      setCategories(catData);
+      setIsLoading(false);
+    });
+  }, []);
+
+  // Read URL search param on mount / url change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const query = params.get("q") || params.get("search");
+      if (query) {
+        setSearchQuery(query);
+      }
+      const category = params.get("category");
+      if (category) {
+        setSelectedCategory(category);
+      }
+    }
+  }, []);
 
   // Filter and Sort Courses
   const filteredAndSortedCourses = useMemo(() => {
-    let result = MOCK_COURSES.filter((course) => {
+    let result = courses.filter((course) => {
       const matchesCategory = selectedCategory === "all" || course.categorySlug === selectedCategory;
       const matchesSearch = 
         course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -49,7 +78,7 @@ export default function CoursesPage() {
     });
 
     return result;
-  }, [selectedCategory, searchQuery, sortBy]);
+  }, [courses, selectedCategory, searchQuery, sortBy]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F9FAFB] text-[#101828]">
@@ -75,7 +104,7 @@ export default function CoursesPage() {
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[#101828]">
-                คอร์สเรียนทั้งหมด ({MOCK_COURSES.length} คอร์ส)
+                คอร์สเรียนทั้งหมด ({courses.length || 3} คอร์ส)
               </h1>
 
               <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
@@ -91,7 +120,7 @@ export default function CoursesPage() {
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               {/* Category Segmented Buttons */}
               <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
-                {CATEGORIES.map((cat) => (
+                {categories.map((cat) => (
                   <button
                     key={cat.id}
                     onClick={() => setSelectedCategory(cat.slug)}

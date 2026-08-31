@@ -78,8 +78,9 @@ export default function SignupPage() {
       }
 
       if (data.session) {
+        const redirectParam = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("redirect") : null;
         setSuccessMessage("สมัครสมาชิกสำเร็จ! กำลังเข้าสู่ระบบ...");
-        setTimeout(() => router.push("/courses"), 800);
+        setTimeout(() => router.push(redirectParam || "/courses"), 800);
       } else {
         setSuccessMessage("สมัครสมาชิกสำเร็จ! กรุณาตรวจสอบอีเมลของคุณเพื่อยืนยันบัญชีเข้าเรียน");
       }
@@ -416,7 +417,7 @@ export default function SignupPage() {
 
         {/* Bottom Trust Badge */}
         <div className="relative z-10 flex items-center justify-between border-t border-white/20 pt-6 text-xs sm:text-sm text-[#E9D7FE]">
-          <span>⭐ คะแนนความพึงพอใจเฉลี่ย 4.98/5.0</span>
+          <span>⭐ มาตรฐานคุณภาพการเรียนการสอนยอดเยี่ยม</span>
           <span>🔒 ปลอดภัยตามมาตรฐาน PDPA</span>
         </div>
       </div>
